@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">NewStuff</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="press_again_to_quit">Press again to quit!</string>
+</resources>

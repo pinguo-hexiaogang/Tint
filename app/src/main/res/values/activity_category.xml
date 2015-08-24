@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="CATEGORY">com.okry.category.NEW_STUFF</string>
+
+    <string name="CATEGORY_1">tint</string>
+
+
+    <string name="CATEGORY_2">2</string>
+    <string name="CATEGORY_3">3</string>
+    <string name="CATEGORY_4">4</string>
+    <string name="CATEGORY_5">5</string>
+    <string name="CATEGORY_6">6</string>
+
+</resources>

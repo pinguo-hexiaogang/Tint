@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:ViewBackgroundHelper="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="#ff70a000"
@@ -23,12 +24,12 @@
         android:layout_height="wrap_content"
         android:text="使用DrawableCompact的setTint方式修改"/>
 
-    <ImageView
+    <Button
         android:id="@+id/tint_image2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/abc_ic_clear_mtrl_alpha">
-    </ImageView>
+        android:background="@drawable/abc_ic_clear_mtrl_alpha">
+    </Button>
 
     <TextView
         android:layout_width="wrap_content"
@@ -100,6 +101,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/tint_drawable"/>
-
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="使用AppCompatButton"/>
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/compat_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/abc_ic_menu_share_mtrl_alpha"
+        ViewBackgroundHelper:backgroundTint="@color/custom_tint"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="使用AppCompatAutoCompleteTextView"/>
+    <android.support.v7.widget.AppCompatAutoCompleteTextView
+        android:id="@+id/compat_tv"
+        android:background="@drawable/abc_ic_menu_share_mtrl_alpha"
+        android:text="compat auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </LinearLayout>

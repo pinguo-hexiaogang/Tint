@@ -3,6 +3,12 @@ package com.okry.newstuff.ui;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v7.widget.AppCompatAutoCompleteTextView;
+import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatCheckedTextView;
+import android.support.v7.widget.AppCompatTextView;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -15,12 +21,12 @@ import butterknife.InjectView;
 /**
  * Created by mr on 15/8/24.
  */
-public class MainTint extends BaseActivity {
+public class MainTint extends BaseActivity implements View.OnClickListener{
 
     @InjectView(R.id.tint_image1)
     ImageView mView1;
     @InjectView(R.id.tint_image2)
-    ImageView mView2;
+    Button mView2;
     @InjectView(R.id.tint_image3)
     ImageView mView3;
     @InjectView(R.id.tint_image4)
@@ -34,16 +40,24 @@ public class MainTint extends BaseActivity {
     @InjectView(R.id.tint_imagebutton1)
     ImageButton mButton1;
 
+    @InjectView(R.id.compat_btn)
+    AppCompatButton mCompatButton;
+
+    @InjectView(R.id.compat_tv)
+    AppCompatAutoCompleteTextView mCompatTv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tint);
         ButterKnife.inject(this);
+        setClickListener();
         // 使用DrawableCompact的方式
         Drawable d = getResources().getDrawable(R.drawable.abc_ic_clear_mtrl_alpha);
         d = DrawableCompat.wrap(d);
-        DrawableCompat.setTint(d, 0x90ff0000);
-//        mView2.setImageDrawable(d);// 不需要设置
+        //DrawableCompat.setTint(d, 0x90ff0000);
+        DrawableCompat.setTintList(d,getResources().getColorStateList(R.color.custom_tint));
+        mView2.setBackgroundDrawable(d);// 不需要设置
         // 使用DrawableCompact + mute的方式
         Drawable d2 = getResources().getDrawable(R.drawable.abc_ic_search_api_mtrl_alpha);
         d2 = DrawableCompat.wrap(d2);
@@ -54,6 +68,27 @@ public class MainTint extends BaseActivity {
         TintedBitmapDrawable d3 = new TintedBitmapDrawable(getResources(), R.drawable.abc_ic_menu_share_mtrl_alpha, 0x900ffff0);
         mView6.setImageDrawable(d3);
         //
+
+        //AppCompatButton
+        //mCompatButton.setSupportBackgroundTintList(getResources().getColorStateList(R.color.custom_tint));
+
+        //mCompatTv.setSupportBackgroundTintList(getResources().getColorStateList(R.color.custom_tint));
+    }
+    private void setClickListener(){
+        mView1.setOnClickListener(this);
+        mView2.setOnClickListener(this);
+        mView3.setOnClickListener(this);
+        mView4.setOnClickListener(this);
+        mView5.setOnClickListener(this);
+        mView6.setOnClickListener(this);
+        mView7.setOnClickListener(this);
+        mButton1.setOnClickListener(this);
+        mCompatButton.setOnClickListener(this);
+        mCompatTv.setOnClickListener(this);
     }
 
+    @Override
+    public void onClick(View v) {
+
+    }
 }

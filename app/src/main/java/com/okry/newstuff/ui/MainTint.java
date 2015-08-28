@@ -14,6 +14,7 @@ import android.widget.ImageView;
 
 import com.okry.newstuff.BaseActivity;
 import com.okry.newstuff.R;
+import com.okry.newstuff.tintwidget.TintButton;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -39,6 +40,9 @@ public class MainTint extends BaseActivity implements View.OnClickListener{
     ImageView mView7;
     @InjectView(R.id.tint_imagebutton1)
     ImageButton mButton1;
+
+    @InjectView(R.id.tint_btn)
+    TintButton mTintBtn;
 
     @InjectView(R.id.compat_btn)
     AppCompatButton mCompatButton;
@@ -70,7 +74,7 @@ public class MainTint extends BaseActivity implements View.OnClickListener{
         //
 
         //AppCompatButton
-        //mCompatButton.setSupportBackgroundTintList(getResources().getColorStateList(R.color.custom_tint));
+        mCompatButton.setSupportBackgroundTintList(getResources().getColorStateList(R.color.custom_tint));
 
         //mCompatTv.setSupportBackgroundTintList(getResources().getColorStateList(R.color.custom_tint));
     }
@@ -85,6 +89,7 @@ public class MainTint extends BaseActivity implements View.OnClickListener{
         mButton1.setOnClickListener(this);
         mCompatButton.setOnClickListener(this);
         mCompatTv.setOnClickListener(this);
+        mTintBtn.setOnClickListener(this);
     }
 
     @Override

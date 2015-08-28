@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_selected="true">
+        <bitmap android:src="@drawable/abc_ic_menu_cut_mtrl_alpha" android:tint="#ff0000"></bitmap>
+    </item>
+
+    <item android:state_focused="true">
+        <bitmap android:src="@drawable/abc_ic_menu_cut_mtrl_alpha" android:tint="#ff0000"></bitmap>
+    </item>
+
+    <item android:state_pressed="true">
+        <bitmap android:src="@drawable/abc_ic_menu_cut_mtrl_alpha" android:tint="#ff0000"></bitmap>
+    </item>
+
+    <item>
+        <bitmap android:src="@drawable/abc_ic_menu_cut_mtrl_alpha"></bitmap>
+    </item>
+
+</selector>

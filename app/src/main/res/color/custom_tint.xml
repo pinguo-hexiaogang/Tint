@@ -20,11 +20,11 @@ limitations under the License.
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Pressed state -->
-    <item android:color="#000000" android:state_pressed="true" />
+    <item android:color="#66000000" android:state_pressed="true" />
 
 
     <!-- Default -->
-    <item android:color="#ff0000" />
+    <item android:color="#00000000" />
 
 
 </selector>

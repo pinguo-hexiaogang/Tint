@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:Tint="http://schemas.android.com/apk/res-auto"
-    xmlns:ViewBackgroundHelper="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -109,7 +108,7 @@
             android:id="@+id/compat_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/abc_ic_menu_share_mtrl_alpha"/>
+            android:background="@drawable/abc_ic_menu_share_mtrl_alpha" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -122,15 +121,43 @@
             android:layout_height="wrap_content"
             android:background="@drawable/abc_ic_menu_share_mtrl_alpha"
             android:text="compat auto" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="使用自定义的TintButton" />
+
         <com.okry.newstuff.tintwidget.TintButton
             android:id="@+id/tint_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/abc_ic_menu_share_mtrl_alpha"
             Tint:PgBackgroundTint="@color/custom_tint" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="使用自定义的TintImageView,BackGround" />
+
+        <com.okry.newstuff.tintwidget.TintImageView
+            android:id="@+id/tint_imv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/eft_lightcolor_beauty"
+            Tint:PgBackgroundTintMode="src_atop"
+            Tint:PgBackgroundTint="@color/custom_tint" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="使用自定义的TintImageView,Src" />
+
+        <com.okry.newstuff.tintwidget.TintImageView
+            android:id="@+id/tint_imv_src"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/eft_skin_red"
+            Tint:PgImageTintMode="src_atop"
+            Tint:PgImageTint="@color/custom_tint" />
     </LinearLayout>
 </ScrollView>

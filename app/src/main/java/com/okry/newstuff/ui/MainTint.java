@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.AppCompatCheckedTextView;
-import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -50,6 +48,12 @@ public class MainTint extends BaseActivity implements View.OnClickListener{
     @InjectView(R.id.compat_tv)
     AppCompatAutoCompleteTextView mCompatTv;
 
+    @InjectView(R.id.tint_imv)
+    View mTintImv;
+
+    @InjectView(R.id.tint_imv_src)
+    View mTintImvSrc;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +94,8 @@ public class MainTint extends BaseActivity implements View.OnClickListener{
         mCompatButton.setOnClickListener(this);
         mCompatTv.setOnClickListener(this);
         mTintBtn.setOnClickListener(this);
+        mTintImv.setOnClickListener(this);
+        mTintImvSrc.setOnClickListener(this);
     }
 
     @Override

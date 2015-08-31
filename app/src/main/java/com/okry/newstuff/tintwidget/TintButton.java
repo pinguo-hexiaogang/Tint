@@ -1,45 +1,72 @@
 package com.okry.newstuff.tintwidget;
 
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.support.v7.graphics.drawable.DrawableUtils;
-import android.support.v7.widget.AppCompatButton;
+import android.content.res.ColorStateList;
+import android.graphics.PorterDuff;
+import android.support.annotation.Nullable;
+import android.support.v4.view.TintableBackgroundView;
 import android.util.AttributeSet;
-
-import com.okry.newstuff.R;
+import android.widget.Button;
 
 /**
  * Created by hexiaogang on 8/28/15.
  */
-public class TintButton extends AppCompatButton {
+public class TintButton extends Button implements TintableBackgroundView {
+    private PgTintHelper mTintHelper;
+
     public TintButton(Context context) {
-        this(context,null);
+        super(context);
+        init(null);
     }
 
     public TintButton(Context context, AttributeSet attrs) {
-        this(context,attrs,R.attr.buttonStyle);
+        super(context, attrs);
+        init(attrs);
     }
 
     public TintButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        loadAttr(attrs, defStyleAttr);
+        init(attrs);
     }
 
-    private void loadAttr(AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs,
-                R.styleable.Tint, defStyleAttr, 0);
-        try {
+    private void init(AttributeSet attrs) {
+        mTintHelper = new PgTintHelper(this);
+        if (attrs != null) {
+            mTintHelper.loadAttr(attrs);
+        }
+    }
 
-            if (a.hasValue(R.styleable.Tint_PgBackgroundTint)) {
-                setSupportBackgroundTintList(a.getColorStateList(R.styleable.Tint_PgBackgroundTint));
-            }
-            if (a.hasValue(R.styleable.Tint_PgBackgroundTintMode)) {
-                setSupportBackgroundTintMode(DrawableUtils.parseTintMode(
-                        a.getInt(R.styleable.Tint_PgBackgroundTintMode, -1),
-                        null));
-            }
-        } finally {
-            a.recycle();
+    @Override
+    public void setSupportBackgroundTintList(@Nullable ColorStateList tint) {
+        if (mTintHelper != null) {
+            mTintHelper.setSupportBackgroundTintList(tint);
+        }
+    }
+
+    @Nullable
+    @Override
+    public ColorStateList getSupportBackgroundTintList() {
+        return mTintHelper != null ? mTintHelper.getSupportBackgroundTintList() : null;
+    }
+
+    @Override
+    public void setSupportBackgroundTintMode(@Nullable PorterDuff.Mode tintMode) {
+        if (mTintHelper != null) {
+            mTintHelper.setSupportBackgroundTintMode(tintMode);
+        }
+    }
+
+    @Nullable
+    @Override
+    public PorterDuff.Mode getSupportBackgroundTintMode() {
+        return mTintHelper != null ? mTintHelper.getSupportBackgroundTintMode() : null;
+    }
+
+    @Override
+    protected void drawableStateChanged() {
+        super.drawableStateChanged();
+        if (mTintHelper != null) {
+            mTintHelper.applySupportBackgroundTint();
         }
     }
 }

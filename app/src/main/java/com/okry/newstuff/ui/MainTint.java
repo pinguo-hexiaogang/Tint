@@ -3,7 +3,6 @@ package com.okry.newstuff.ui;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.Button;
@@ -44,9 +43,6 @@ public class MainTint extends BaseActivity implements View.OnClickListener{
 
     @InjectView(R.id.compat_btn)
     AppCompatButton mCompatButton;
-
-    @InjectView(R.id.compat_tv)
-    AppCompatAutoCompleteTextView mCompatTv;
 
     @InjectView(R.id.tint_imv)
     View mTintImv;
@@ -92,7 +88,6 @@ public class MainTint extends BaseActivity implements View.OnClickListener{
         mView7.setOnClickListener(this);
         mButton1.setOnClickListener(this);
         mCompatButton.setOnClickListener(this);
-        mCompatTv.setOnClickListener(this);
         mTintBtn.setOnClickListener(this);
         mTintImv.setOnClickListener(this);
         mTintImvSrc.setOnClickListener(this);

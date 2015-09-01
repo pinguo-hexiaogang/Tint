@@ -113,18 +113,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="使用AppCompatAutoCompleteTextView" />
-
-        <android.support.v7.widget.AppCompatAutoCompleteTextView
-            android:id="@+id/compat_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/abc_ic_menu_share_mtrl_alpha"
-            android:text="compat auto" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="使用自定义的TintButton" />
 
         <com.okry.newstuff.tintwidget.TintButton

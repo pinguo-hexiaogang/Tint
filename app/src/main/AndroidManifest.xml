@@ -34,6 +34,24 @@
                 <category android:name="com.okry.category.NEW_STUFF" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.RotateLineActivity"
+            android:label="rotate scale line">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="com.okry.category.NEW_STUFF" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.VectorDrawableActivity"
+            android:label="vector drawable">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="com.okry.category.NEW_STUFF" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

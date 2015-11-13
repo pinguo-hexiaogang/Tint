@@ -71,6 +71,34 @@
                 <category android:name="com.okry.category.NEW_STUFF" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.RippleActivity"
+            android:label="ripple"
+            android:theme="@style/Theme.MyTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="com.okry.category.NEW_STUFF" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.ToolBarActivity"
+            android:label="tool bar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="com.okry.category.NEW_STUFF" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.DragSwitchActivity"
+            android:label="drag switch">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="com.okry.category.NEW_STUFF" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

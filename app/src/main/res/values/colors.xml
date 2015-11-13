@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="light_common_bg">#ffffffff</color>
+    <color name="light_common_divider">#e0e0e0</color>
+    <color name="light_common_foreground">#42221f1f</color>
+    <!--HightLight颜色,用于点击ripple等-->
+    <color name="light_common_high_light">#cccccc</color>
+</resources>

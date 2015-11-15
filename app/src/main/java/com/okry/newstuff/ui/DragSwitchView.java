@@ -60,11 +60,15 @@ public class DragSwitchView extends View implements GestureDetector.OnGestureLis
     private GestureDetectorCompat mGestureDetector;
     private Scroller mScroller;
 
+    private boolean mFling = false;
+    private boolean mIsDown = false;
+    private int mLastSelectIndex = 0;
+
+    private IItemChangeListener mItemChangeListener = null;
     public DragSwitchView(Context context) {
         super(context);
         init();
     }
-
     public DragSwitchView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
@@ -105,6 +109,10 @@ public class DragSwitchView extends View implements GestureDetector.OnGestureLis
         String[] defaultStrs = {"1", "2", "3", "4", "5"};
         mItemList = new ArrayList(Arrays.asList(defaultStrs));
         mScroller = new Scroller(getContext());
+    }
+
+    public void setItemChangeListener(IItemChangeListener listener) {
+        this.mItemChangeListener = listener;
     }
 
     private String getLongestItem() {
@@ -155,6 +163,7 @@ public class DragSwitchView extends View implements GestureDetector.OnGestureLis
         } else if (currentIndex > (mItemList.size() - 1)) {
             currentIndex = mItemList.size() - 1;
         }
+        mLastSelectIndex = currentIndex;
         Rect digitalRect = new Rect();
         String digitalStr = getLongestItem();
         mTextPaint.getTextBounds(digitalStr, 0, digitalStr.length(), digitalRect);
@@ -196,25 +205,74 @@ public class DragSwitchView extends View implements GestureDetector.OnGestureLis
     public boolean onTouchEvent(MotionEvent event) {
         boolean ret = mGestureDetector.onTouchEvent(event);
         if (event.getAction() == MotionEvent.ACTION_UP) {
-            int scrollY = calculateScrollY();
-            Logger.d("Action_up,scrollY is:" + scrollY);
-            if (scrollY != 0) {
-                mScroller.startScroll(0, mDeltaY, 0, scrollY, 500);
-                invalidate();
-            }
+            mIsDown = false;
+            Logger.d("Action_up");
+            autoSettle();
         }
         return ret;
+    }
+
+    private void autoSettle() {
+        int scrollY = calculateScrollY();
+        if (scrollY != 0) {
+            mScroller.startScroll(0, mDeltaY, 0, scrollY, 500);
+            invalidate();
+        } else {
+            //通知状态改变
+            if (!mIsDown) {
+                callItemChangeListener();
+            }
+        }
     }
 
     @Override
     public void computeScroll() {
         super.computeScroll();
-        Logger.d("computeScroll");
+        //Logger.d("computeScroll");
         if (mScroller.computeScrollOffset()) {
             mDeltaY = mScroller.getCurrY();
-            Logger.d("mDeltaY is:" + mDeltaY);
+            //Logger.d("mDeltaY is:" + mDeltaY);
             invalidate();
+        } else {
+            if (mFling) {
+                mFling = false;
+                autoSettle();
+            } else {
+                //通知状态改变
+                if (!mIsDown) {
+                    callItemChangeListener();
+                }
+            }
         }
+    }
+
+    private void callItemChangeListener() {
+        if (mItemChangeListener != null) {
+            int newIndex = calculateCurrentIndex();
+            Logger.d("newIndex is:" + newIndex + ",the lastIndex is:" + mLastSelectIndex);
+            if (newIndex >= 0 && newIndex <= mItemList.size() - 1 && mLastSelectIndex != newIndex) {
+                Logger.d("call onItemChange:");
+                mLastSelectIndex = newIndex;
+                mItemChangeListener.onItemChange(newIndex);
+            }
+        }
+    }
+
+    private int calculateCurrentIndex() {
+        int targetCenterY = (mTargetRect.top + mTargetRect.bottom) / 2;
+        int minDelta = Integer.MAX_VALUE;
+        int index = -1;
+        for (int i = 0; i < mItemList.size(); i++) {
+            if (mCenterYMap.get(i) == null) {
+                continue;
+            }
+            int delta = targetCenterY - mCenterYMap.get(i);
+            if (Math.abs(minDelta) > Math.abs(delta)) {
+                minDelta = delta;
+                index = i;
+            }
+        }
+        return index;
     }
 
     private int calculateScrollY() {
@@ -231,6 +289,11 @@ public class DragSwitchView extends View implements GestureDetector.OnGestureLis
 
     @Override
     public boolean onDown(MotionEvent e) {
+        if (!mScroller.isFinished()) {
+            mScroller.forceFinished(false);
+        }
+        mFling = false;
+        mIsDown = true;
         return true;
     }
 
@@ -246,7 +309,7 @@ public class DragSwitchView extends View implements GestureDetector.OnGestureLis
 
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        //Logger.d("onScroll,distanceY:"+distanceY);
+        Logger.d("onScroll,distanceY:" + distanceY);
         mDeltaY -= distanceY;
         if (mDeltaY > mMaxDeltaY) {
             mDeltaY = mMaxDeltaY;
@@ -265,6 +328,14 @@ public class DragSwitchView extends View implements GestureDetector.OnGestureLis
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        Logger.d("onFling");
+        mFling = true;
+        mScroller.fling(0, mDeltaY, 0, (int) velocityY, 0, 0, mMinDeltaY, mMaxDeltaY);
+        invalidate();
         return false;
+    }
+
+    public static interface IItemChangeListener {
+        public void onItemChange(int index);
     }
 }

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="true">
+    <item
+        android:drawable="@drawable/bing_00"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_01"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_02"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_03"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_04"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_05"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_06"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_07"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_08"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_09"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_10"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_11"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_12"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_13"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_14"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_15"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_16"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_17"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_18"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_19"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_20"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_21"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_22"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_23"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_24"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_25"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_26"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_27"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_28"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_29"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_30"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_31"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_32"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_33"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_34"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_35"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_36"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_37"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_38"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_39"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_40"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_41"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_42"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_43"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_44"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_45"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_46"
+        android:duration="20" />
+    <item
+        android:drawable="@drawable/bing_47"
+        android:duration="20" />
+
+</animation-list>

@@ -310,7 +310,7 @@ public class DragSwitchView extends View implements GestureDetector.OnGestureLis
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
         Logger.d("onScroll,distanceY:" + distanceY);
-        mDeltaY -= distanceY;
+        mDeltaY -= distanceY * 0.4;
         if (mDeltaY > mMaxDeltaY) {
             mDeltaY = mMaxDeltaY;
         }

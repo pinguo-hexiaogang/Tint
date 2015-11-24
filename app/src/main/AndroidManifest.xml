@@ -108,6 +108,15 @@
                 <category android:name="com.okry.category.NEW_STUFF" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".gl.AirHockeyOrthomActivity"
+            android:label="AirHockey Orthom">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="com.okry.category.NEW_STUFF" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

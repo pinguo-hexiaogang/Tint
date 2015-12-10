@@ -126,11 +126,30 @@
                 <category android:name="com.okry.category.NEW_STUFF" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.GestureTestActivity"
+        <activity
+            android:name=".ui.GestureTestActivity"
             android:label="gesture test">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="com.okry.category.NEW_STUFF" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.AnimationTestActivity"
+            android:label="animation test">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="com.okry.category.NEW_STUFF" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.DownloadDrawableActivity"
+            android:label="@string/title_activity_download_drawable"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.okry.category.NEW_STUFF" />
             </intent-filter>
         </activity>

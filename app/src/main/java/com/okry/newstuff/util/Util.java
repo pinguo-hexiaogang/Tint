@@ -15,4 +15,12 @@ public class Util {
         float density = metrics.density;
         return (int) (density * dp);
     }
+
+    public static int dpToPixel(Context context, float dp) {
+        DisplayMetrics metrics = new DisplayMetrics();
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        wm.getDefaultDisplay().getMetrics(metrics);
+        float density = metrics.density;
+        return (int) (density * dp);
+    }
 }

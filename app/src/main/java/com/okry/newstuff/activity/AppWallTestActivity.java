@@ -8,13 +8,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.okry.newstuff.R;
+import com.okry.newstuff.view.AppWallRotateView;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 public class AppWallTestActivity extends AppCompatActivity {
+    @InjectView(R.id.appwall_view)
+    AppWallRotateView mAppWall;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_wall_test);
+        ButterKnife.inject(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

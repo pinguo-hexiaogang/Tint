@@ -1,4 +1,4 @@
-package com.okry.newstuff.ui;
+package com.okry.newstuff.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;

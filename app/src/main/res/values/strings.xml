@@ -8,4 +8,5 @@
     <string name="title_activity_matrix">MatrixActivity</string>
     <string name="title_activity_download_drawable">DownloadDrawable</string>
     <string name="title_activity_scene_intent_test">SceneIntentTestActivity</string>
+    <string name="title_activity_app_wall_test">AppWall Test</string>
 </resources>

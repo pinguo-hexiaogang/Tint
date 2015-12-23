@@ -1,4 +1,4 @@
-package com.okry.newstuff.ui;
+package com.okry.newstuff.view;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -31,7 +31,7 @@ public class DownloadDrawable extends Drawable {
     private int mProgressStrokeWidth;
     private int mSpaceWidth;
 
-    DownloadDrawable(Context context) {
+    public DownloadDrawable(Context context) {
         this.mRes = context.getResources();
         mPaint.setAntiAlias(true);
 

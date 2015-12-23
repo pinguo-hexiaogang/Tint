@@ -1,4 +1,4 @@
-package com.okry.newstuff.ui;
+package com.okry.newstuff.activity;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.okry.newstuff.BaseActivity;
 import com.okry.newstuff.R;
 import com.okry.newstuff.tintwidget.TintButton;
+import com.okry.newstuff.view.TintedBitmapDrawable;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;

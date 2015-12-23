@@ -1,4 +1,4 @@
-package com.okry.newstuff.ui;
+package com.okry.newstuff.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;

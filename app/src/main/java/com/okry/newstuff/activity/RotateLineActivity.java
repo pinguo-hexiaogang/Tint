@@ -1,13 +1,14 @@
-package com.okry.newstuff.ui;
+package com.okry.newstuff.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 
 import com.okry.newstuff.R;
 import com.okry.newstuff.detector.RotateGestureDetector;
+import com.okry.newstuff.view.RotateScaleLineView;
 
 public class RotateLineActivity extends AppCompatActivity {
     private RotateGestureDetector mRotateDetector = null;

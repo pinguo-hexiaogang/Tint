@@ -1,4 +1,4 @@
-package com.okry.newstuff.ui;
+package com.okry.newstuff.activity;
 
 import android.app.Activity;
 import android.content.Intent;

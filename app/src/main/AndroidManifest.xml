@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.MainTint"
+            android:name=".activity.MainTint"
             android:label="@string/CATEGORY_1">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.MatrixActivity"
+            android:name=".view.MatrixActivity"
             android:label="@string/title_activity_matrix">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,7 +36,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.RotateLineActivity"
+            android:name=".activity.RotateLineActivity"
             android:label="rotate scale line">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,7 +45,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.VectorDrawableActivity"
+            android:name=".activity.VectorDrawableActivity"
             android:label="vector drawable">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -72,7 +72,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.RippleActivity"
+            android:name=".activity.RippleActivity"
             android:label="ripple"
             android:theme="@style/Theme.MyTheme">
             <intent-filter>
@@ -82,7 +82,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.ToolBarActivity"
+            android:name=".activity.ToolBarActivity"
             android:label="tool bar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -91,7 +91,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.DragSwitchActivity"
+            android:name=".activity.DragSwitchActivity"
             android:label="drag switch">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -100,7 +100,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.PortraitLoadingActivity"
+            android:name=".activity.PortraitLoadingActivity"
             android:label="portrait loading">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -127,7 +127,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.GestureTestActivity"
+            android:name=".activity.GestureTestActivity"
             android:label="gesture test">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -136,7 +136,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.AnimationTestActivity"
+            android:name=".activity.AnimationTestActivity"
             android:label="animation test">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -145,7 +145,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.DownloadDrawableActivity"
+            android:name=".activity.DownloadDrawableActivity"
             android:label="@string/title_activity_download_drawable"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -155,8 +155,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.SceneIntentTestActivity"
+            android:name=".activity.SceneIntentTestActivity"
             android:label="@string/title_activity_scene_intent_test"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="com.okry.category.NEW_STUFF" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.AppWallTestActivity"
+            android:label="@string/title_activity_app_wall_test"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

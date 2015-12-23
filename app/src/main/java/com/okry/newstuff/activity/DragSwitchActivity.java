@@ -1,9 +1,10 @@
-package com.okry.newstuff.ui;
+package com.okry.newstuff.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.okry.newstuff.R;
+import com.okry.newstuff.view.DragSwitchView;
 import com.orhanobut.logger.Logger;
 
 import butterknife.ButterKnife;

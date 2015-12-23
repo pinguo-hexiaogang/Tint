@@ -23,4 +23,7 @@ public class Util {
         float density = metrics.density;
         return (int) (density * dp);
     }
+    public static int test(){
+        return 5;
+    }
 }

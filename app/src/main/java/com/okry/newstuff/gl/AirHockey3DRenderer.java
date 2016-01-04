@@ -150,7 +150,7 @@ public class AirHockey3DRenderer implements Renderer {
         // Set the OpenGL viewport to fill the entire surface.
         glViewport(0, 0, width, height);
         //glViewport(width/2, height/2,width/2,height/2);
-        Matrix.perspectiveM(mFrustumMatrix, 0, 90, width * 1f / height, 1f, 10f);
+        Matrix.perspectiveM(mFrustumMatrix, 0, 90, width * 1f / height, 1f, 20f);
         Matrix.setIdentityM(mModeMatrix, 0);
         Matrix.translateM(mModeMatrix, 0, 0, 0, -2f);
         Matrix.rotateM(mModeMatrix, 0, -60, 1f, 0f, 0f);

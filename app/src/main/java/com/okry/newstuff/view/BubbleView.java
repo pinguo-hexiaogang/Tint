@@ -9,21 +9,23 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
+import android.graphics.Path;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.OvershootInterpolator;
 
 import com.okry.newstuff.R;
+import com.okry.newstuff.util.Util;
 import com.orhanobut.logger.Logger;
 
 /**
  * Created by hexiaogang on 3/7/16.
  */
 public class BubbleView extends View {
-    private static final long ANIMATE_DURATION = 1000;
+    private static final long ANIMATE_DURATION = 2000;
+    private static final long ANIMATE_SCALE_DURATION = 2000;
     private Bitmap mBubbleImgBitmap = null;
     private Bitmap mBubbleLargeBitmap = null;
     private Bitmap mBubbleSmallBitmap = null;
@@ -33,8 +35,8 @@ public class BubbleView extends View {
     private Matrix mMatrix = new Matrix();
     private Matrix mImageMatrix = new Matrix();
     private Paint mBubblePaint;
-    private Paint mBubbleImgPaint;
-    private Paint mCirclePaint;
+    //气泡里面的额图片没有气泡高，被裁剪的时候最线面有一条横线（主要时因为decode的时候被系统放大了）
+    private int mImagePadding;
 
     public BubbleView(Context context) {
         super(context);
@@ -60,12 +62,11 @@ public class BubbleView extends View {
     private void init() {
         this.mBubbleLargeBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.bubble_large);
         this.mBubbleSmallBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.bubble_small);
+        Logger.d("large width:" + mBubbleLargeBitmap.getWidth() + ",height:" + mBubbleLargeBitmap.getHeight()
+                + ",small width:" + mBubbleSmallBitmap.getWidth() + ",height:" + mBubbleSmallBitmap.getHeight());
 
         mBubblePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mBubbleImgPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mBubbleImgPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP));
-        mCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mCirclePaint.setColor(0xaaffffff);
+        mImagePadding = Util.dpToPixel(getContext(), 1);
     }
 
     public void setBubbleImageBitmap(Bitmap bubbleImageBitmap) {
@@ -79,11 +80,11 @@ public class BubbleView extends View {
     }
 
     private int getBubbleWidth() {
-        return mBubbleLargeBitmap.getWidth() + mBubbleSmallBitmap.getWidth() / 2;
+        return mBubbleLargeBitmap.getWidth() + mBubbleSmallBitmap.getWidth() / 2 + getOvershootDis();
     }
 
     private int getBubbleHeight() {
-        return mBubbleLargeBitmap.getHeight() + mBubbleSmallBitmap.getHeight() / 2;
+        return mBubbleLargeBitmap.getHeight() + mBubbleSmallBitmap.getHeight() - mBubbleSmallBitmap.getHeight() / 5 + getOvershootDis();
     }
 
     public void setBubbleLargeX(int x) {
@@ -97,16 +98,19 @@ public class BubbleView extends View {
     }
 
     public void setBubbleScale(float scale) {
-        Logger.d("setBubbleScale:" + scale);
         this.mBubbleScale = scale;
         invalidate();
+    }
+
+    private int getOvershootDis() {
+        return mBubbleLargeBitmap.getWidth() / 4;
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        drawBubbleLarge(canvas);
         drawBubbleImg(canvas);
+        drawBubbleLarge(canvas);
         drawBubbleSmall(canvas);
     }
 
@@ -128,37 +132,33 @@ public class BubbleView extends View {
             return;
         }
         mImageMatrix.reset();
-        //mImageMatrix.postConcat(mMatrix);
         mImageMatrix.postTranslate((mBubbleLargeBitmap.getWidth() - mBubbleImgBitmap.getWidth()) / 2,
-                (mBubbleLargeBitmap.getHeight() - mBubbleImgBitmap.getHeight()) / 2);
+                (mBubbleLargeBitmap.getHeight() - mBubbleImgBitmap.getHeight()) / 2 + mImagePadding);
         canvas.save();
-        int sc = canvas.saveLayer(0, 0, getWidth(), getHeight(), null,
-                Canvas.MATRIX_SAVE_FLAG |
-                        Canvas.CLIP_SAVE_FLAG |
-                        Canvas.HAS_ALPHA_LAYER_SAVE_FLAG |
-                        Canvas.FULL_COLOR_LAYER_SAVE_FLAG |
-                        Canvas.CLIP_TO_LAYER_SAVE_FLAG);
         canvas.concat(mMatrix);
-        canvas.drawCircle(mBubbleLargeBitmap.getWidth() / 2, mBubbleLargeBitmap.getHeight() / 2, mBubbleLargeBitmap.getWidth() / 2, mCirclePaint);
-        canvas.drawBitmap(mBubbleImgBitmap, mImageMatrix, mBubbleImgPaint);
-        canvas.restoreToCount(sc);
+        Path path = new Path();
+        path.addCircle(mBubbleLargeBitmap.getWidth() / 2, mBubbleLargeBitmap.getHeight() / 2, mBubbleLargeBitmap.getWidth() / 2, Path.Direction.CW);
+        canvas.clipPath(path);
+        canvas.drawBitmap(mBubbleImgBitmap, mImageMatrix, mBubblePaint);
+        canvas.restore();
     }
 
     public void popBubble() {
-        float startScale = 0.2f;
+        float startScale = 0.33f;
+
         ObjectAnimator scaleAnimator = ObjectAnimator.ofFloat(this, "bubbleScale", startScale, 1.0f);
-        scaleAnimator.setDuration(ANIMATE_DURATION);
-        scaleAnimator.setInterpolator(new AccelerateInterpolator());
+        scaleAnimator.setDuration(ANIMATE_SCALE_DURATION);
+        scaleAnimator.setInterpolator(new DecelerateInterpolator());
 
-        int startX = getBubbleWidth() - mBubbleSmallBitmap.getWidth() / 2;
-        ObjectAnimator transXAnimator = ObjectAnimator.ofInt(this, "bubbleLargeX", startX, 0);
+        int startX = getBubbleWidth() - mBubbleSmallBitmap.getWidth();
+        ObjectAnimator transXAnimator = ObjectAnimator.ofInt(this, "bubbleLargeX", startX, getOvershootDis());
         transXAnimator.setDuration(ANIMATE_DURATION);
-        transXAnimator.setInterpolator(new AccelerateInterpolator());
+        transXAnimator.setInterpolator(new OvershootInterpolator(0.8f));
 
-        int startY = getBubbleHeight() - mBubbleSmallBitmap.getHeight() / 2;
-        ObjectAnimator transYAnimator = ObjectAnimator.ofInt(this, "bubbleLargeY", startY, 0);
+        int startY = getBubbleHeight() - mBubbleSmallBitmap.getHeight();
+        ObjectAnimator transYAnimator = ObjectAnimator.ofInt(this, "bubbleLargeY", startY, getOvershootDis());
         transYAnimator.setDuration(ANIMATE_DURATION);
-        transYAnimator.setInterpolator(new AccelerateInterpolator());
+        transYAnimator.setInterpolator(new OvershootInterpolator(0.8f));
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(scaleAnimator, transXAnimator, transYAnimator);
         animatorSet.start();

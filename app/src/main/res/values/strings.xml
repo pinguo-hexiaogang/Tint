@@ -12,4 +12,5 @@
     <string name="title_activity_web_view_cache_test">WebViewCacheTestActivity</string>
     <string name="title_activity_smile_face_animation">SmileFaceAnimationActivity</string>
     <string name="title_activity_corordinate">CorordinateActivity</string>
+    <string name="title_activity_bubble">BubbleActivity</string>
 </resources>

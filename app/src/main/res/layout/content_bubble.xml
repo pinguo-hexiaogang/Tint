@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.okry.newstuff.activity.BubbleActivity"
+    tools:showIn="@layout/activity_bubble">
+
+    <com.okry.newstuff.view.BubbleView
+        android:id="@+id/bubble_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!-- <com.okry.newstuff.view.BubbleLayout
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_centerInParent="true">
+
+         <RelativeLayout
+             android:id="@+id/bubble_large_layout"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content">
+
+             <ImageView
+                 android:id="@+id/bubble_large_imv"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:background="@drawable/bubble_large" />
+
+             <ImageView
+                 android:id="@+id/bubble_image_imv"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerInParent="true"
+                 android:background="@drawable/bubble_image" />
+         </RelativeLayout>
+
+         <ImageView
+             android:id="@+id/bubble_small_imv"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignRight="@id/bubble_large_layout"
+             android:layout_below="@id/bubble_large_layout"
+             android:background="@drawable/bubble_small" />
+     </com.okry.newstuff.view.BubbleLayout>-->
+
+</RelativeLayout>

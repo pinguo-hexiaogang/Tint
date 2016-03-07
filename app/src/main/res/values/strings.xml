@@ -11,4 +11,5 @@
     <string name="title_activity_app_wall_test">AppWall Test</string>
     <string name="title_activity_web_view_cache_test">WebViewCacheTestActivity</string>
     <string name="title_activity_smile_face_animation">SmileFaceAnimationActivity</string>
+    <string name="title_activity_corordinate">CorordinateActivity</string>
 </resources>

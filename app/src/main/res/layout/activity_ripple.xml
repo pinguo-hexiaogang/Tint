@@ -31,4 +31,12 @@
         android:background="@drawable/settings_item_click_selector"
         android:padding="20dp" />
 
+    <TextView
+        android:text="NEW"
+        android:textColor="@android:color/holo_red_light"
+        android:layout_below="@id/image_view"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </RelativeLayout>

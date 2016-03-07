@@ -51,10 +51,10 @@ public class WebViewCacheTestActivity extends AppCompatActivity {
         //mWebViewHidden.loadUrl("http://www.baidu.com");
         //mWebViewHidden.loadUrl("https://mall.camera360.com/Ebusiness/views/index.html");
         //mWebViewHidden.loadUrl("http://map.baidu.com/mobile/webapp/index/index#index/index/foo=bar/vt=map");
-        mWebViewHidden.loadUrl("http://union.co/");
-        //mWebViewHidden.loadUrl("http://joomla.templaza.net/everline/");
+        //mWebViewHidden.loadUrl("http://union.co/");
+        mWebViewHidden.loadUrl("http://joomla.templaza.net/everline/");
         //mWebViewHidden.loadUrl("http://www.mug.pl/");
-        mWebViewHidden.setVisibility(View.INVISIBLE);
+        mWebViewHidden.setVisibility(View.VISIBLE);
         mWebView.setVisibility(View.INVISIBLE);
     }
 
@@ -96,6 +96,8 @@ public class WebViewCacheTestActivity extends AppCompatActivity {
     private void setClient() {
         mWebViewHidden.setWebChromeClient(new WebChromeClient());
         mWebViewHidden.setWebViewClient(new WebViewClient() {
+            private long mStartTime;
+
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
@@ -105,13 +107,14 @@ public class WebViewCacheTestActivity extends AppCompatActivity {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
+                mStartTime = System.currentTimeMillis();
                 Logger.d("load start");
             }
 
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                Logger.d("load finished");
+                Logger.d("load finished,use time:" + (System.currentTimeMillis() - mStartTime));
                 //mWebView.loadUrl(url);
             }
         });
@@ -120,6 +123,8 @@ public class WebViewCacheTestActivity extends AppCompatActivity {
     private void setClient2() {
         mWebView.setWebChromeClient(new WebChromeClient());
         mWebView.setWebViewClient(new WebViewClient() {
+            private long mStartTime;
+
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
@@ -129,13 +134,14 @@ public class WebViewCacheTestActivity extends AppCompatActivity {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
+                mStartTime = System.currentTimeMillis();
                 Logger.d("webview2 load start");
             }
 
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                Logger.d("webview2 load finished");
+                Logger.d("webview2 load finished,use time:" + (System.currentTimeMillis() - mStartTime));
             }
         });
     }

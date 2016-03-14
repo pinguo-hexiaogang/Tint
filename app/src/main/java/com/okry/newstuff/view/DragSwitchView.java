@@ -89,13 +89,13 @@ public class DragSwitchView extends View implements GestureDetector.OnGestureLis
         mGestureDetector = new GestureDetectorCompat(getContext(), this);
         mTextStr = "美肤";
 
-        mRoundRadius = Util.dpToPixel(getContext(), 15);
-        mPaddingTop = Util.dpToPixel(getContext(), 8);
-        mPaddingBottom = Util.dpToPixel(getContext(), 10);
-        mPaddingLeft = Util.dpToPixel(getContext(), 18);
-        mPaddingRight = Util.dpToPixel(getContext(), 18);
-        mSpace = Util.dpToPixel(getContext(), 4);
-        mDigitalSpace = Util.dpToPixel(getContext(), 10);
+        mRoundRadius = Util.dpToPx(getContext(), 15);
+        mPaddingTop = Util.dpToPx(getContext(), 8);
+        mPaddingBottom = Util.dpToPx(getContext(), 10);
+        mPaddingLeft = Util.dpToPx(getContext(), 18);
+        mPaddingRight = Util.dpToPx(getContext(), 18);
+        mSpace = Util.dpToPx(getContext(), 4);
+        mDigitalSpace = Util.dpToPx(getContext(), 10);
 
         mBackgroundPaint = new Paint();
         mBackgroundPaint.setColor(mBackgroundColor);
@@ -105,7 +105,7 @@ public class DragSwitchView extends View implements GestureDetector.OnGestureLis
         mTextPaint = new Paint();
         mTextPaint.setColor(mTextColor);
         mTextPaint.setAntiAlias(true);
-        mTextPaint.setTextSize(Util.dpToPixel(getContext(), 15));
+        mTextPaint.setTextSize(Util.dpToPx(getContext(), 15));
         String[] defaultStrs = {"1", "2", "3", "4", "5"};
         mItemList = new ArrayList(Arrays.asList(defaultStrs));
         mScroller = new Scroller(getContext());

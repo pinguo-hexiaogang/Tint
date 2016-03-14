@@ -14,7 +14,7 @@ import android.view.WindowManager;
  * Created by hexiaogang on 11/13/15.
  */
 public class Util {
-    public static int dpToPixel(Context context, int dp) {
+    public static int dpToPx(Context context, int dp) {
         DisplayMetrics metrics = new DisplayMetrics();
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         wm.getDefaultDisplay().getMetrics(metrics);
@@ -22,7 +22,7 @@ public class Util {
         return (int) (density * dp);
     }
 
-    public static int dpToPixel(Context context, float dp) {
+    public static int dpToPx(Context context, float dp) {
         DisplayMetrics metrics = new DisplayMetrics();
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         wm.getDefaultDisplay().getMetrics(metrics);

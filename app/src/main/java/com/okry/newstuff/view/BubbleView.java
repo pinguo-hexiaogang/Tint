@@ -13,12 +13,10 @@ import android.graphics.Path;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.animation.BounceInterpolator;
 import android.view.animation.DecelerateInterpolator;
-import android.view.animation.OvershootInterpolator;
 
 import com.okry.newstuff.R;
-import com.okry.newstuff.util.MyBounceInterpolator;
+import com.okry.newstuff.util.AccelerateBounceInterpolator;
 import com.okry.newstuff.util.Util;
 import com.orhanobut.logger.Logger;
 
@@ -156,7 +154,7 @@ public class BubbleView extends View {
         canvas.save();
         canvas.concat(mMatrix);
         Path path = new Path();
-        path.addCircle(mBubbleLargeBitmap.getWidth() / 2, mBubbleLargeBitmap.getHeight() / 2, mBubbleLargeBitmap.getWidth() / 2 - Util.dpToPx(getContext(),2f), Path.Direction.CW);
+        path.addCircle(mBubbleLargeBitmap.getWidth() / 2, mBubbleLargeBitmap.getHeight() / 2, mBubbleLargeBitmap.getWidth() / 2 - Util.dpToPx(getContext(), 2f), Path.Direction.CW);
         canvas.clipPath(path);
         canvas.drawBitmap(mBubbleImgBitmap, mImageMatrix, mBubblePaint);
         canvas.restore();
@@ -166,19 +164,19 @@ public class BubbleView extends View {
         float startScale = 0.33f;
 
         ObjectAnimator scaleAnimator = ObjectAnimator.ofFloat(this, "bubbleScale", startScale, 1.0f);
-        scaleAnimator.setDuration(ANIMATE_DURATION);
+        scaleAnimator.setDuration(1500);
         scaleAnimator.setInterpolator(new DecelerateInterpolator());
 
         int startX = getBubbleWidth() - mBubbleSmallBitmap.getWidth();
         ObjectAnimator transXAnimator = ObjectAnimator.ofInt(this, "bubbleLargeX", startX, getOvershootDis());
         transXAnimator.setDuration(ANIMATE_DURATION);
-        transXAnimator.setInterpolator(new MyBounceInterpolator());
+        transXAnimator.setInterpolator(new AccelerateBounceInterpolator());
         //transXAnimator.setInterpolator(new OvershootInterpolator(1.5f));
 
         int startY = getBubbleHeight() - mBubbleSmallBitmap.getHeight();
         ObjectAnimator transYAnimator = ObjectAnimator.ofInt(this, "bubbleLargeY", startY, getOvershootDis());
         transYAnimator.setDuration(ANIMATE_DURATION);
-        transYAnimator.setInterpolator(new MyBounceInterpolator());
+        transYAnimator.setInterpolator(new AccelerateBounceInterpolator());
         //transYAnimator.setInterpolator(new OvershootInterpolator(1.5f));
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(scaleAnimator, transXAnimator, transYAnimator);

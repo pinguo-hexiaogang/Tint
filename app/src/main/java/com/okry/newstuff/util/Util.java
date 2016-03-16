@@ -10,6 +10,8 @@ import android.net.NetworkInfo;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
+import java.util.Locale;
+
 /**
  * Created by hexiaogang on 11/13/15.
  */
@@ -85,5 +87,14 @@ public class Util {
         }
 
         return false;
+    }
+
+    public static final boolean isChinese() {
+        Locale locale = Locale.getDefault();
+        if (locale.getLanguage().equalsIgnoreCase("zh")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

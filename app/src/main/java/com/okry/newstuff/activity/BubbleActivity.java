@@ -9,7 +9,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.okry.newstuff.R;
+import com.okry.newstuff.util.Util;
 import com.okry.newstuff.view.BubbleView;
+import com.orhanobut.logger.Logger;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -42,6 +44,7 @@ public class BubbleActivity extends AppCompatActivity {
                 mBubbleView.popBubble();
             }
         }, 1000);
+        Logger.d("is chinese:" + Util.isChinese());
     }
 
 }

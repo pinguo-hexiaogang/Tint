@@ -6,12 +6,22 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
+import android.widget.TextView;
 
 import com.okry.newstuff.R;
 import com.okry.newstuff.util.Util;
 import com.okry.newstuff.view.BubbleView;
 import com.orhanobut.logger.Logger;
+
+import junit.framework.Assert;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Locale;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -20,6 +30,8 @@ public class BubbleActivity extends AppCompatActivity {
 
     @InjectView(R.id.bubble_view)
     BubbleView mBubbleView;
+    @InjectView(R.id.span_tv)
+    TextView mSpanTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +56,27 @@ public class BubbleActivity extends AppCompatActivity {
                 mBubbleView.popBubble();
             }
         }, 1000);
-        Logger.d("is chinese:" + Util.isChinese());
+        SpannableStringBuilder styleTextBuilder = new SpannableStringBuilder(mSpanTv.getText());
+        styleTextBuilder.setSpan(new ForegroundColorSpan(0XFFFDD600), 0, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        //mSpanTv.setText(styleTextBuilder);
+        testNullify();
+    }
+    public void testNullify() {
+        Collection<Integer> c  = new ArrayList<Integer>();
+        nullify(c);
+        Assert.assertNotNull(c);
+        final Collection<Integer> c1 = c;
+        Assert.assertTrue(c1.equals(c));
+        change(c);
+        Assert.assertTrue(c1.equals(c));
+    }
+
+    private void change(Collection<Integer> c) {
+        c = new ArrayList<Integer>();
+    }
+
+    public void nullify(Collection<?> t) {
+        t = null;
     }
 
 }

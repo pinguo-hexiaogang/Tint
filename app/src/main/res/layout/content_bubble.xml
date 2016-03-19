@@ -17,6 +17,16 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="-5dp" />
 
+    <TextView
+        android:id="@+id/span_tv"
+        android:background="@drawable/big_text_toast_shape"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="my name is hexiaogang"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+
     <!-- <com.okry.newstuff.view.BubbleLayout
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"

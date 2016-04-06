@@ -13,4 +13,5 @@
     <string name="title_activity_smile_face_animation">SmileFaceAnimationActivity</string>
     <string name="title_activity_corordinate">CorordinateActivity</string>
     <string name="title_activity_bubble">BubbleActivity</string>
+    <string name="title_activity_graduation_seek_bar">GraduationSeekBarActivity</string>
 </resources>

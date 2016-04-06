@@ -219,6 +219,16 @@
                 <category android:name="com.okry.category.NEW_STUFF" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.GraduationSeekBarActivity"
+            android:label="@string/title_activity_graduation_seek_bar"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="com.okry.category.NEW_STUFF" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -9,11 +9,11 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
 import com.okry.newstuff.R;
-import com.okry.newstuff.util.Util;
 import com.okry.newstuff.view.BubbleView;
 import com.orhanobut.logger.Logger;
 
@@ -21,7 +21,6 @@ import junit.framework.Assert;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Locale;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -79,4 +78,15 @@ public class BubbleActivity extends AppCompatActivity {
         t = null;
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        int i = 0;
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+                i++;
+                Logger.d("down down,repeat count:" + event.getRepeatCount());
+                break;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

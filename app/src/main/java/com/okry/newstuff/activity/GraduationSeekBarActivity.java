@@ -33,9 +33,6 @@ public class GraduationSeekBarActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        mSeekBar2.setRange(-100, 100);
-        mSeekBar2.setStep(100);
-        mSeekBar2.setValue(20);
     }
 
 }

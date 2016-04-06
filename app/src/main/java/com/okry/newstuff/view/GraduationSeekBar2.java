@@ -8,7 +8,6 @@ import android.graphics.Path;
 import android.os.Build;
 import android.support.v4.view.GestureDetectorCompat;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,15 +27,11 @@ public class GraduationSeekBar2 extends View implements GestureDetector.OnGestur
     private OverScroller mScroller;
     private GestureDetectorCompat mGestureDetectorCompat;   // 使用V4兼容包, 兼容低版本系统
 
-    private int mMin = -100;
-    private int mMax = 100;
-    private int mStep = 1;
-    private float[] cosArray = null;
+    private int mTotalStep = 100;
     private float mDensityDpi = 1.0f;
     private int mAngel = 180;
     private Paint mPaint;
     private Path mCenterIndicatorPath = new Path();
-    private int mValue = -50;
     private boolean mIsSmartScroll;
     private double mSeekBarLen;   //弧形划块总长度
     private float mLineStrokeWidth;  //弧形上画笔大小
@@ -50,6 +45,10 @@ public class GraduationSeekBar2 extends View implements GestureDetector.OnGestur
     private int mCursorPadding;
     private int mVerticalPadding;
     private float mScrollDis = 0f;
+    private float[] mLineWidthAlphaCache = new float[2];
+    private int mStartStep = 0;
+    private int mRightTotalStep = 0;
+    private int mLeftTotalStep = 0;
 
     public interface OnSeekBarChangeListener {
         void onProgressChanged(int progress, int min, int max);
@@ -99,26 +98,24 @@ public class GraduationSeekBar2 extends View implements GestureDetector.OnGestur
         mIsSmartScroll = false;
     }
 
+    public void setTotalStep(int totalStep) {
+        this.mTotalStep = totalStep;
+        updateRightLeftStep(mStartStep);
+    }
+
+    public void setStartStep(int startStep) {
+        this.mStartStep = startStep;
+        updateRightLeftStep(mStartStep);
+    }
+
     /**
-     * [90,270] 建议值180、360
+     * @param currentStep 以1开始计数
      */
-    public void setRoundAngel(int angel) {
-        mAngel = angel;
+    private void updateRightLeftStep(int currentStep) {
+        mLeftTotalStep = currentStep - 1;
+        mRightTotalStep = mTotalStep - mStartStep;
     }
 
-    public void setRange(int min, int max) {
-        mMin = min;
-        mMax = max;
-    }
-
-    public void setStep(int step) {
-        mStep = step;
-    }
-
-    public void setValue(int value) {
-        mValue = value;
-        invalidate();
-    }
 
     public void setOnSeekBarChangeListener(OnSeekBarChangeListener onSeekBarChangeListener) {
         mOnSeekBarChangeListener = onSeekBarChangeListener;
@@ -137,26 +134,30 @@ public class GraduationSeekBar2 extends View implements GestureDetector.OnGestur
         updateCursorPath(w, h);
         mSeekBarLen = Math.PI * w * mAngel / 360;
         mSpaceLen = (mSeekBarLen - LINE_NUMS * mLineStrokeWidth) / (LINE_NUMS - 1);
-        updateAngelCosArray();
     }
 
-    private void updateAngelCosArray() {
-        double scrollRadian = getScrollRadian();
-        int arrayLen = LINE_NUMS / 2 + 1;
-        cosArray = new float[arrayLen];
-        double perAngel = Math.PI / 2 / (arrayLen - 1);
 
-        for (int i = 0; i < arrayLen; i++) {
-            double angelOfPi = perAngel * i + scrollRadian;
-            double cos = Math.cos(angelOfPi);
-            cosArray[i] = (float) cos;
-        }
+    private int getPerAngle() {
+        int perAngle = 180 / (LINE_NUMS - 1);
+        return perAngle;
+    }
+
+    private float getPerRadian() {
+        float perRadian = (float) (Math.PI / (LINE_NUMS - 1));
+        return perRadian;
     }
 
     private double getScrollRadian() {
-        double scrollRadian = (mScrollDis * 1.0f / getWidth()) * Math.PI;
+        int angle = getScrollAngle();
+        double scrollRadian = Math.PI / 180 * angle;
         Logger.d("scrollRadian:" + scrollRadian);
         return scrollRadian;
+    }
+
+    private int getScrollAngle() {
+        int scrollRadian = (int) ((mScrollDis * 1.0f / getWidth()) * 180);
+        int angle = scrollRadian % getPerAngle();
+        return angle;
     }
 
     private void updateCursorPath(int width, int height) {
@@ -170,6 +171,7 @@ public class GraduationSeekBar2 extends View implements GestureDetector.OnGestur
 
     private void drawIndicator(Canvas canvas) {
         mPaint.setColor(COLOR);
+        mPaint.setAlpha(255);
         canvas.drawPath(mCenterIndicatorPath, mPaint);
     }
 
@@ -180,51 +182,73 @@ public class GraduationSeekBar2 extends View implements GestureDetector.OnGestur
         return ret;
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        //三角形
-        drawIndicator(canvas);
+    private float[] getStrokeWidthAndAlpha(double radian, double scrollRadian, boolean isRight) {
+        double cos = 0f;
+        if (isRight) {
+            cos = Math.cos(radian + scrollRadian);
+        } else {
+            cos = Math.cos(radian - scrollRadian);
+        }
+        float strokeWidth = (float) (cos * mLineStrokeWidth);
+        mLineWidthAlphaCache[0] = strokeWidth;
+        mLineWidthAlphaCache[1] = (int) (255 * cos + 0.5f);
+        return mLineWidthAlphaCache;
+    }
 
+    private void drawLines(Canvas canvas) {
         float lineWidth = mLineStrokeWidth;
         float halfOfCicleLen = (float) (Math.PI * getWidth() / 2);
 
         int len = LINE_NUMS / 2;
         float halfOfWidth = getWidth() / 2.0f;
-        mPaint.setStrokeWidth(lineWidth);
 
         int yTop = mCursorPadding + mVerticalPadding + (int) (mCursorSize * 0.7);
         int yBottom = yTop + mLineHeight;
 
-        canvas.drawLine(halfOfWidth, yTop, halfOfWidth, yBottom, mPaint);
+        double scrollRadian = getScrollRadian();
+        double perRadian = getPerRadian();
 
-        int selIndex = mValue * mAngel / (mMax - mMin) * LINE_NUMS / 180;
-        boolean isRight = selIndex > 0;
-        if (!isRight) {
-            selIndex = 0 - selIndex;
+        for (int i = 0; i <= len; i++) {
+            if (i == 0) {
+                double cos = Math.cos(scrollRadian);
+                float strokeWidth = (float) (cos * lineWidth);
+                mPaint.setColor(COLOR);
+                mPaint.setStrokeWidth(strokeWidth);
+                mPaint.setAlpha((int) (255 * cos + 0.5f));
+                float distance = (float) (Math.sin(scrollRadian) * getWidth() / 2);
+                canvas.drawLine(halfOfWidth + distance, yTop, halfOfWidth + distance, yBottom, mPaint);
+            } else {
+                double angel = (lineWidth + mSpaceLen) * i / halfOfCicleLen * 180;
+                double angelOfPi = angel * Math.PI / 180;
+                float distanceRight = (float) (Math.sin(angelOfPi + getScrollRadian()) * getWidth() / 2);
+                float distanceLeft = (float) (Math.sin(angelOfPi - getScrollRadian()) * getWidth() / 2);
+
+                float centerXLeft = halfOfWidth - lineWidth / 2 - distanceLeft;
+                float centerXRight = halfOfWidth + lineWidth / 2 + distanceRight;
+
+                mPaint.setColor(COLOR);
+
+                float[] widthAlphaRight = getStrokeWidthAndAlpha(angelOfPi, scrollRadian, true);
+                mPaint.setAlpha((int) widthAlphaRight[1]);
+                mPaint.setStrokeWidth(widthAlphaRight[0]);
+                canvas.drawLine(centerXRight, yTop, centerXRight, yBottom, mPaint);
+
+
+                float[] widthAlphaLeft = getStrokeWidthAndAlpha(angelOfPi, scrollRadian, false);
+                mPaint.setAlpha((int) widthAlphaLeft[1]);
+                mPaint.setStrokeWidth(widthAlphaLeft[0]);
+                canvas.drawLine(centerXLeft, yTop, centerXLeft, yBottom, mPaint);
+            }
         }
-        Log.e("Frisky", "indexFromMin:" + selIndex);
-        for (int i = 1; i <= len; i++) {
-            float strokeWidth = cosArray[i] * lineWidth;
-            if (strokeWidth < 0.8f) {
-                continue;
-            }
+    }
 
-            if (strokeWidth <= 1.0f) {
-                strokeWidth = 1.0f;
-            }
+    @Override
+    protected void onDraw(Canvas canvas) {
+        //三角形
+        drawIndicator(canvas);
+        drawLines(canvas);
 
-            mPaint.setStrokeWidth(strokeWidth);
-            double angel = (lineWidth + mSpaceLen) * i / halfOfCicleLen * 180;
-            double angelOfPi = angel * Math.PI / 180;
-            float distance = (float) (Math.sin(angelOfPi + getScrollRadian()) * getWidth() / 2);
 
-            float centerXLeft = halfOfWidth - lineWidth / 2 - distance;
-            float centerXRight = halfOfWidth + lineWidth / 2 + distance;
-
-            mPaint.setColor(COLOR);
-            mPaint.setAlpha((int) (255 * cosArray[i] + 0.5f));
-            canvas.drawLine(centerXRight, yTop, centerXRight, yBottom, mPaint);
-            canvas.drawLine(centerXLeft, yTop, centerXLeft, yBottom, mPaint);
 
          /*   if (mValue == 0) {
                 mPaint.setColor(COLOR);
@@ -253,7 +277,6 @@ public class GraduationSeekBar2 extends View implements GestureDetector.OnGestur
                     }
                 }
             }*/
-        }
     }
 
 
@@ -280,7 +303,6 @@ public class GraduationSeekBar2 extends View implements GestureDetector.OnGestur
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
         //scrollBy((int) distanceX, 0);
         mScrollDis -= distanceX;
-        updateAngelCosArray();
         invalidate();
         return true;
     }

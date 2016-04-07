@@ -11,7 +11,7 @@ import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.OverScroller;
+import android.widget.Scroller;
 
 import com.okry.newstuff.util.Util;
 import com.orhanobut.logger.Logger;
@@ -24,7 +24,7 @@ public class GraduationSeekBar2 extends View implements GestureDetector.OnGestur
     private static final int COLOR = 0xffFFD700;
     private static final int SEL_COLOR = 0xffff0000;
 
-    private OverScroller mScroller;
+    private Scroller mScroller;
     private GestureDetectorCompat mGestureDetectorCompat;   // 使用V4兼容包, 兼容低版本系统
 
     private int mTotalStep = 100;
@@ -45,6 +45,10 @@ public class GraduationSeekBar2 extends View implements GestureDetector.OnGestur
     private int mCursorPadding;
     private int mVerticalPadding;
     private float mScrollDis = 0f;
+    //向左可以滚动的最大位移
+    private float mLeftTotalScroll = 0f;
+    //向右可以滚动的最大位移
+    private float mRightTotalScroll = 0f;
     private float[] mLineWidthAlphaCache = new float[2];
     private int mCurrentStep = 0;
     private int mStartStep = 0;
@@ -83,7 +87,7 @@ public class GraduationSeekBar2 extends View implements GestureDetector.OnGestur
     }
 
     private void init() {
-        mScroller = new OverScroller(getContext());
+        mScroller = new Scroller(getContext());
         mGestureDetectorCompat = new GestureDetectorCompat(getContext(), this);
 
         mLineStrokeWidth = Util.dpToPx(getContext(), 2);
@@ -102,12 +106,17 @@ public class GraduationSeekBar2 extends View implements GestureDetector.OnGestur
     public void setTotalStep(int totalStep) {
         this.mTotalStep = totalStep;
         updateRightLeftStep(mCurrentStep);
+        calLeftRightTotalScroll(mStartStep, mTotalStep);
     }
 
+    /**
+     * @param startStep 以1开始计数
+     */
     public void setStartStep(int startStep) {
         this.mCurrentStep = startStep;
         this.mStartStep = startStep;
         updateRightLeftStep(mCurrentStep);
+        calLeftRightTotalScroll(mStartStep, mTotalStep);
     }
 
     /**
@@ -136,6 +145,7 @@ public class GraduationSeekBar2 extends View implements GestureDetector.OnGestur
         updateCursorPath(w, h);
         mSeekBarLen = Math.PI * w * mAngel / 360;
         mSpaceLen = (mSeekBarLen - LINE_NUMS * mLineStrokeWidth) / (LINE_NUMS - 1);
+        calLeftRightTotalScroll(mStartStep, mTotalStep);
     }
 
 
@@ -183,6 +193,16 @@ public class GraduationSeekBar2 extends View implements GestureDetector.OnGestur
 
     }
 
+    private void calLeftRightTotalScroll(int startStep, int totalStep) {
+        int totalRightStep = mTotalStep - mStartStep;
+        float totalRightRadian = totalRightStep * getPerRadian();
+        mRightTotalScroll = (float) (totalRightRadian / Math.PI * getWidth());
+
+        int totalLeftStep = mStartStep - 1;
+        float totalLeftRadian = totalLeftStep * getPerRadian();
+        mLeftTotalScroll = (float) (totalLeftRadian / Math.PI * getWidth());
+    }
+
     private void drawIndicator(Canvas canvas) {
         mPaint.setColor(COLOR);
         mPaint.setAlpha(255);
@@ -194,6 +214,18 @@ public class GraduationSeekBar2 extends View implements GestureDetector.OnGestur
         boolean ret = false;
         ret = mGestureDetectorCompat.onTouchEvent(event);
         return ret;
+    }
+
+    @Override
+    public void computeScroll() {
+        super.computeScroll();
+        if (mScroller.computeScrollOffset()) {
+            Logger.d("scroller,x:" + mScroller.getCurrX());
+            updateTotalScroll(mScrollDis - mScroller.getCurrX());
+            invalidate();
+        } else {
+            Logger.d("scroller end");
+        }
     }
 
     private float[] getStrokeWidthAndAlpha(double radian, double scrollRadian, boolean isRight) {
@@ -308,7 +340,18 @@ public class GraduationSeekBar2 extends View implements GestureDetector.OnGestur
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        return false;
+        if (mScrollDis < 0) {
+            if (Math.abs(mScrollDis) >= mRightTotalScroll) {
+                return false;
+            }
+        } else if (mScrollDis > 0) {
+            if (mScrollDis >= mLeftTotalScroll) {
+                return false;
+            }
+        }
+        mScroller.fling((int) mScrollDis, 0, (int) velocityX, 0, (int) -mRightTotalScroll, (int) mLeftTotalScroll, 0, 0);
+        invalidate();
+        return true;
     }
 
     private void updateTotalScroll(float xDistance) {
@@ -317,15 +360,11 @@ public class GraduationSeekBar2 extends View implements GestureDetector.OnGestur
         float scrollRightStep = angle * 1.0f / getPerAngle();
         int currentStep = mStartStep - (int) scrollRightStep;
         if (currentStep >= mTotalStep) {
-            int totalRightStep = mTotalStep - mStartStep;
-            float totalRadian = totalRightStep * getPerRadian();
-            mScrollDis = -(float) (totalRadian / Math.PI * getWidth());
+            mScrollDis = -mRightTotalScroll;
             mCurrentStep = mTotalStep;
             updateRightLeftStep(mCurrentStep);
         } else if (currentStep <= 1) {
-            int totalLeftStep = mStartStep - 1;
-            float totalRadian = totalLeftStep * getPerRadian();
-            mScrollDis = (float) (totalRadian / Math.PI * getWidth());
+            mScrollDis = mLeftTotalScroll;
             mCurrentStep = 1;
             updateRightLeftStep(mCurrentStep);
         } else {

@@ -39,7 +39,7 @@ public class GraduationSeekBarActivity extends AppCompatActivity {
             }
         });
         mSeekBar2.setTotalStep(100);
-        mSeekBar2.setStartStep(1);
+        mSeekBar2.setStartStep(100);
         mSeekBar2.setOnSeekBarChangeListener(new GraduationSeekBar2.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(int progress, int total) {

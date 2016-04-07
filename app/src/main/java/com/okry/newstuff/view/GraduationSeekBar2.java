@@ -262,14 +262,14 @@ public class GraduationSeekBar2 extends View implements GestureDetector.OnGestur
             }
         } else {
             if (total > (mStartStep - 1)) {
-                total = mTotalStep - 1;
+                total = mStartStep - 1;
             }
         }
-        Logger.d("autoScroll,total:" + total);
         //WHY?这里用getPerRadian算出来的值不准确
         float scrollToDis = (float) (total * getPerAngle() * 1.0f / 180 * getWidth());
         //float scrollToDis = (float) (total * getPerRadian() / Math.PI * getWidth());
         int dx = (int) (scrollToDis - mScrollDis);
+        Logger.d("autoScroll,total:" + total + ",dx:" + dx + ",scrollToDis:" + scrollToDis);
         if (dx != 0) {
             mScroller.startScroll((int) mScrollDis, 0, dx, 0, 250);
             //scroller只有int,算出来的位置不是很精确,不能恰好对准箭头;所有把这个值保存下来
@@ -277,6 +277,7 @@ public class GraduationSeekBar2 extends View implements GestureDetector.OnGestur
             mInScroll = true;
             mScrollToDis = scrollToDis;
         } else {
+            updateTotalScroll(mScrollDis - scrollToDis);
             callScrollEnd();
         }
         invalidate();
@@ -314,7 +315,7 @@ public class GraduationSeekBar2 extends View implements GestureDetector.OnGestur
         //画中间的线
         double cos = Math.cos(scrollRadian);
         float strokeWidth = (float) (cos * lineWidth);
-        mPaint.setColor(COLOR);
+        mPaint.setColor(SEL_COLOR);
         mPaint.setStrokeWidth(strokeWidth);
         mPaint.setAlpha((int) (255 * cos + 0.5f));
         float distance = (float) (Math.sin(scrollRadian) * getWidth() / 2);
@@ -381,6 +382,7 @@ public class GraduationSeekBar2 extends View implements GestureDetector.OnGestur
             mScroller.forceFinished(false);
         }
         mInScroll = false;
+        mFling = false;
         return true;
     }
 
@@ -433,10 +435,16 @@ public class GraduationSeekBar2 extends View implements GestureDetector.OnGestur
             mScrollDis = -mRightTotalScroll;
             mCurrentStep = mTotalStep;
             updateRightLeftStep(mCurrentStep);
+          /*  if (xDistance < 0) {
+                mScrollDis -= xDistance;
+            }*/
         } else if (currentStep <= 1) {
             mScrollDis = mLeftTotalScroll;
             mCurrentStep = 1;
             updateRightLeftStep(mCurrentStep);
+            /*if (xDistance > 0) {
+                mScrollDis -= xDistance;
+            }*/
         } else {
             Logger.d("updateTotalScroll" + ",preDis:" + mScrollDis + ",now Dis:" + scrollDis);
             mScrollDis = scrollDis;

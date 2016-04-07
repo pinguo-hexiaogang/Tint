@@ -52,6 +52,8 @@ public class GraduationSeekBar2 extends View implements GestureDetector.OnGestur
     private int mRightTotalStep = 0;
     private int mLeftTotalStep = 0;
     private boolean mFling = false;
+    private boolean mInScroll = false;
+    private float mScrollToDis = Float.MIN_VALUE;
 
     public interface OnSeekBarChangeListener {
         void onProgressChanged(int progress, int total);
@@ -109,6 +111,9 @@ public class GraduationSeekBar2 extends View implements GestureDetector.OnGestur
      * @param startStep 以1开始计数
      */
     public void setStartStep(int startStep) {
+        if (startStep < 1) {
+            throw new IllegalArgumentException("the start step mus >= 1");
+        }
         this.mCurrentStep = startStep;
         this.mStartStep = startStep;
         updateRightLeftStep(mCurrentStep);
@@ -211,6 +216,7 @@ public class GraduationSeekBar2 extends View implements GestureDetector.OnGestur
         ret = mGestureDetectorCompat.onTouchEvent(event);
         if (!mFling && event.getAction() == MotionEvent.ACTION_UP) {
             autoScroll();
+            return true;
         }
         return ret;
     }
@@ -226,8 +232,21 @@ public class GraduationSeekBar2 extends View implements GestureDetector.OnGestur
             if (mFling) {
                 mFling = false;
                 autoScroll();
+            } else {
+                if (mInScroll) {
+                    updateTotalScroll(mScrollDis - mScrollToDis);
+                    callScrollEnd();
+                    mInScroll = false;
+                    invalidate();
+                }
             }
             Logger.d("scroller end");
+        }
+    }
+
+    private void callScrollEnd() {
+        if (mOnSeekBarChangeListener != null) {
+            mOnSeekBarChangeListener.onStopTrackingTouch(mCurrentStep, mTotalStep);
         }
     }
 
@@ -246,11 +265,20 @@ public class GraduationSeekBar2 extends View implements GestureDetector.OnGestur
                 total = mTotalStep - 1;
             }
         }
+        Logger.d("autoScroll,total:" + total);
         //WHY?这里用getPerRadian算出来的值不准确
         float scrollToDis = (float) (total * getPerAngle() * 1.0f / 180 * getWidth());
         //float scrollToDis = (float) (total * getPerRadian() / Math.PI * getWidth());
-        Logger.d("autoScroll,total:" + total);
-        updateTotalScroll(mScrollDis - scrollToDis);
+        int dx = (int) (scrollToDis - mScrollDis);
+        if (dx != 0) {
+            mScroller.startScroll((int) mScrollDis, 0, dx, 0, 250);
+            //scroller只有int,算出来的位置不是很精确,不能恰好对准箭头;所有把这个值保存下来
+            //滚动完成之后再使用这个值更新位置.
+            mInScroll = true;
+            mScrollToDis = scrollToDis;
+        } else {
+            callScrollEnd();
+        }
         invalidate();
     }
 
@@ -349,6 +377,10 @@ public class GraduationSeekBar2 extends View implements GestureDetector.OnGestur
         if (mOnSeekBarChangeListener != null) {
             mOnSeekBarChangeListener.onStartTrackingTouch(mCurrentStep, mTotalStep);
         }
+        if (!mScroller.isFinished()) {
+            mScroller.forceFinished(false);
+        }
+        mInScroll = false;
         return true;
     }
 

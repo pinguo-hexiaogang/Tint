@@ -39,11 +39,11 @@ public class GraduationSeekBarActivity extends AppCompatActivity {
             }
         });
         mSeekBar2.setTotalStep(100);
-        mSeekBar2.setStartStep(50);
+        mSeekBar2.setStartStep(1);
         mSeekBar2.setOnSeekBarChangeListener(new GraduationSeekBar2.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(int progress, int total) {
-                mTextTv.setText("current progress:" + progress + ",total:" + total);
+                mTextTv.setText("start progress:" + progress + ",total:" + total);
             }
 
             @Override
@@ -53,7 +53,7 @@ public class GraduationSeekBarActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(int progress, int total) {
-                mTextTv.setText("current progress:" + progress + ",total:" + total);
+                mTextTv.setText("stop progress:" + progress + ",total:" + total);
             }
         });
     }

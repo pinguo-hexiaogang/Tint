@@ -246,7 +246,9 @@ public class GraduationSeekBar2 extends View implements GestureDetector.OnGestur
                 total = mTotalStep - 1;
             }
         }
-        float scrollToDis = (float) (total * getPerRadian() / Math.PI * getWidth());
+        //WHY?这里用getPerRadian算出来的值不准确
+        float scrollToDis = (float) (total * getPerAngle() * 1.0f / 180 * getWidth());
+        //float scrollToDis = (float) (total * getPerRadian() / Math.PI * getWidth());
         Logger.d("autoScroll,total:" + total);
         updateTotalScroll(mScrollDis - scrollToDis);
         invalidate();

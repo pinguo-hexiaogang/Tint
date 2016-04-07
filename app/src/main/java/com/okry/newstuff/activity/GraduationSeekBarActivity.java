@@ -38,8 +38,8 @@ public class GraduationSeekBarActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        mSeekBar2.setTotalStep(45);
-        mSeekBar2.setStartStep(1);
+        mSeekBar2.setTotalStep(100);
+        mSeekBar2.setStartStep(50);
         mSeekBar2.setOnSeekBarChangeListener(new GraduationSeekBar2.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(int progress, int total) {

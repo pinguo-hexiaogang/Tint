@@ -20,11 +20,21 @@
         android:textColor="@android:color/white"
         android:textSize="20sp" />
 
-    <com.okry.newstuff.view.GraduationSeekBar2
+    <com.okry.newstuff.view.GraduationSeekBar
         android:id="@+id/seekbar_2"
         android:layout_width="match_parent"
-        android:layout_marginTop="20dp"
         android:layout_height="50dp"
-        android:layout_below="@id/progress_tv" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_below="@id/progress_tv"
+        android:layout_marginTop="20dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_below="@id/seekbar_2"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_height="wrap_content"
+        android:text="change start value" />
 
 </RelativeLayout>

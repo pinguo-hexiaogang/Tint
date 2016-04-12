@@ -44,7 +44,7 @@ public class GraduationSeekBarActivity extends AppCompatActivity {
             }
         });
         mSeekBar2.setTotalStep(100);
-        mSeekBar2.setStartStep(100);
+        mSeekBar2.setStartStep(1);
         mSeekBar2.setOnSeekBarChangeListener(new GraduationSeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(int progress, int total) {
@@ -66,7 +66,7 @@ public class GraduationSeekBarActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mStartValue = (mStartValue + 10) % 100;
                 //mSeekBar2.setStartStep(mStartValue);
-                mSeekBar2.setTotalStep(mStartValue);
+                mSeekBar2.setCurrentStep(mStartValue);
             }
         });
         Logger.d("9 % 3.14:" + (9 % Math.PI));

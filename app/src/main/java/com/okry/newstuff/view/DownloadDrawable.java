@@ -39,8 +39,8 @@ public class DownloadDrawable extends Drawable {
         this.mDownloadingDrawable = mRes.getDrawable(R.drawable.download_presses);
         this.mDoneDrawable = mRes.getDrawable(R.drawable.download_done);
 
-        mProgressStrokeWidth = Util.dpToPx(context, 1.5f);
-        mSpaceWidth = Util.dpToPx(context, 1.5f);
+        mProgressStrokeWidth = Util.dpToPixel(context, 1.5f);
+        mSpaceWidth = Util.dpToPixel(context, 1.5f);
     }
 
     @Override

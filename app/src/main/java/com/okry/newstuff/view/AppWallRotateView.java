@@ -85,10 +85,10 @@ public class AppWallRotateView extends View {
     private void init() {
         createAnimator();
         mRandom = new Random();
-        mBorder1StrokeWidth = Util.dpToPx(getContext(), 1.5f);
-        mBorder2StrokeWidth = Util.dpToPx(getContext(), 1.5f);
-        mSpaceWidth = Util.dpToPx(getContext(), 1f);
-        mRoundCornerRadius = Util.dpToPx(getContext(), 10f);
+        mBorder1StrokeWidth = Util.dpToPixel(getContext(), 1.5f);
+        mBorder2StrokeWidth = Util.dpToPixel(getContext(), 1.5f);
+        mSpaceWidth = Util.dpToPixel(getContext(), 1f);
+        mRoundCornerRadius = Util.dpToPixel(getContext(), 10f);
 
         mBorderPaint1.setColor(0x80ffffff);
         mBorderPaint1.setAntiAlias(true);

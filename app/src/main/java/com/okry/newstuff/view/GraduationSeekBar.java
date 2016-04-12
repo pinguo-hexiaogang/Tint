@@ -90,12 +90,12 @@ public class GraduationSeekBar extends View implements GestureDetector.OnGesture
         mScroller = new Scroller(getContext());
         mGestureDetectorCompat = new GestureDetectorCompat(getContext(), this);
 
-        mLineStrokeWidth = Util.dpToPx(getContext(), 3);
-        mCursorSize = Util.dpToPx(getContext(), 10);
-        mLineHeight = Util.dpToPx(getContext(), 13);
-        mCursorPadding = Util.dpToPx(getContext(), 1);
-        mVerticalTopPadding = Util.dpToPx(getContext(), 13);
-        mVerticalBottomPadding = Util.dpToPx(getContext(), 5);
+        mLineStrokeWidth = Util.dpToPixel(getContext(), 3);
+        mCursorSize = Util.dpToPixel(getContext(), 10);
+        mLineHeight = Util.dpToPixel(getContext(), 13);
+        mCursorPadding = Util.dpToPixel(getContext(), 1);
+        mVerticalTopPadding = Util.dpToPixel(getContext(), 13);
+        mVerticalBottomPadding = Util.dpToPixel(getContext(), 5);
 
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
@@ -111,6 +111,11 @@ public class GraduationSeekBar extends View implements GestureDetector.OnGesture
         reset();
         invalidate();
     }
+
+    public int getTotalStep() {
+        return mTotalStep;
+    }
+
 
     /**
      * @param startStep 以1开始计数
@@ -132,6 +137,9 @@ public class GraduationSeekBar extends View implements GestureDetector.OnGesture
         mInScroll = false;
         mScrollDis = 0f;
         mScrollToDis = Float.MIN_VALUE;
+        if (!mScroller.isFinished()) {
+            mScroller.forceFinished(true);
+        }
     }
 
     /**
@@ -437,7 +445,7 @@ public class GraduationSeekBar extends View implements GestureDetector.OnGesture
         double radian = getScrollRadian(scrollDis);
         double scrollStep = radian * 1.0f / getPerRadian();
         int currentStep = mStartStep - (int) ((scrollStep));
-        //Logger.d("currentStep:" + currentStep + ",scrollStep:" + scrollStep + ",scrollDis:" + scrollDis + ",mScrollDis:" + mScrollDis + ",rightTotal:" + mRightTotalScroll);
+        //L.d("currentStep:" + currentStep + ",scrollStep:" + scrollStep + ",scrollDis:" + scrollDis + ",mScrollDis:" + mScrollDis + ",rightTotal:" + mRightTotalScroll);
         //解决startStep在首或者末的时候,轻轻拖动不滚动的问题
         if (mStartStep == mTotalStep && xDistance < 0 && scrollStep > 0f && scrollStep < 1f) {
             mScrollDis = scrollDis;

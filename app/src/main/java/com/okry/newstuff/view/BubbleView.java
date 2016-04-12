@@ -68,7 +68,7 @@ public class BubbleView extends View {
                 + ",small width:" + mBubbleSmallBitmap.getWidth() + ",height:" + mBubbleSmallBitmap.getHeight());
 
         mBubblePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mImagePadding = Util.dpToPx(getContext(), 1.5f);
+        mImagePadding = Util.dpToPixel(getContext(), 1.5f);
     }
 
 
@@ -154,7 +154,7 @@ public class BubbleView extends View {
         canvas.save();
         canvas.concat(mMatrix);
         Path path = new Path();
-        path.addCircle(mBubbleLargeBitmap.getWidth() / 2, mBubbleLargeBitmap.getHeight() / 2, mBubbleLargeBitmap.getWidth() / 2 - Util.dpToPx(getContext(), 2f), Path.Direction.CW);
+        path.addCircle(mBubbleLargeBitmap.getWidth() / 2, mBubbleLargeBitmap.getHeight() / 2, mBubbleLargeBitmap.getWidth() / 2 - Util.dpToPixel(getContext(), 2f), Path.Direction.CW);
         canvas.clipPath(path);
         canvas.drawBitmap(mBubbleImgBitmap, mImageMatrix, mBubblePaint);
         canvas.restore();

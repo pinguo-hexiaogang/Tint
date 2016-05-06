@@ -223,7 +223,6 @@ public class DragSwitchViewHor extends View implements GestureDetector.OnGesture
         }
         canvas.restore();
         mTextPaint.setAlpha(255);
-        canvas.drawLine(mInitX, 0, mInitX, getHeight(), mTextPaint);
     }
 
     /**
@@ -374,7 +373,7 @@ public class DragSwitchViewHor extends View implements GestureDetector.OnGesture
                 int scrollX = calculateScrollXByIndex(clickIndex);
                 mClickScrolling = true;
                 mScroller.startScroll(mScrollX, 0, scrollX - mScrollX, 0, 500);
-                Logger.d("onSingleTapUp scroll,mScrollX:" + mScrollX + ",scrollX:" + scrollX);
+                Logger.d("onSingleTapUp scroll,mScrollX:" + mScrollX + ",scrollX:" + scrollX + ",click index:" + clickIndex);
                 invalidate();
                 return true;
             }
@@ -392,7 +391,11 @@ public class DragSwitchViewHor extends View implements GestureDetector.OnGesture
         for (int i = 0; i < mItemInfoList.size(); i++) {
             ItemInfo itemInfo = mItemInfoList.get(i);
             int itemX = itemInfo.point.x - mScrollX;
-            if (x >= itemX && x <= itemX + itemInfo.bounds.width()) {
+            int right;
+            int left;
+            right = itemX + itemInfo.bounds.width() + mItemSpace / 2;
+            left = itemX - mItemSpace / 2;
+            if (x >= left && x <= right) {
                 return i;
             }
         }

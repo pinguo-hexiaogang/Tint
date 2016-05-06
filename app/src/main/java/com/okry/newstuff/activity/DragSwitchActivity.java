@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.okry.newstuff.R;
 import com.okry.newstuff.view.DragSwitchView;
+import com.okry.newstuff.view.DragSwitchViewHor;
 import com.orhanobut.logger.Logger;
 
 import butterknife.ButterKnife;
@@ -13,6 +14,8 @@ import butterknife.InjectView;
 public class DragSwitchActivity extends AppCompatActivity {
     @InjectView(R.id.drag_view)
     DragSwitchView mDragView;
+    @InjectView(R.id.drag_view_hor)
+    DragSwitchViewHor mDragViewHor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +24,15 @@ public class DragSwitchActivity extends AppCompatActivity {
         ButterKnife.inject(this);
         mDragView.setCurrentIndex(5);
         mDragView.setItemChangeListener(new DragSwitchView.IItemChangeListener() {
+            @Override
+            public void onItemChange(int index) {
+                Logger.d("the select index is:" + index);
+            }
+        });
+
+
+        mDragViewHor.setCurrentIndex(1);
+        mDragViewHor.setItemChangeListener(new DragSwitchViewHor.IItemChangeListener() {
             @Override
             public void onItemChange(int index) {
                 Logger.d("the select index is:" + index);

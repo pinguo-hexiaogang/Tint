@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/black"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -12,6 +14,17 @@
     <com.okry.newstuff.view.DragSwitchView
         android:id="@+id/drag_view"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="match_parent" />
+
+    <com.okry.newstuff.view.DragSwitchViewHor
+        android:id="@+id/drag_view_hor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:hor_selected_color="@android:color/white"
+        app:hor_normal_color="@android:color/darker_gray"
+        app:hor_text_size="15sp"
+        app:hor_clickable="true"
+        app:hor_items="@array/camera_items" />
 
 </RelativeLayout>

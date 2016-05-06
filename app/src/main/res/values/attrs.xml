@@ -46,4 +46,85 @@
             <enum name="add" value="16" />
         </attr>
     </declare-styleable>
+    <!-- PanelView attrs -->
+    <declare-styleable name="panelStyle">
+
+        <!--
+            0 ********** 1 ********** 2
+            *                         *
+            *                         *
+            *                         *
+            *                         *
+            3                         4
+            *                         *
+            *                         *
+            *                         *
+            *                         *
+            5 ********** 6 ********** 7
+        -->
+        <attr name="arrow_position">
+            <!--
+            <enum name="left_top" value="0" />
+            -->
+            <enum name="center_top" value="1" />
+            <!--
+            <enum name="right_top" value="2" />
+            -->
+            <enum name="left_center" value="3" />
+            <enum name="right_center" value="4" />
+            <!--
+            <enum name="left_bottom" value="5" />
+            -->
+            <enum name="center_bottom" value="6" />
+            <!--
+            <enum name="right_bottom" value="7" />
+            -->
+        </attr>
+
+
+        <!--
+                                _
+                /\              |
+               /  \             height
+              /    \            |
+             /      \           -
+            ++++++++++
+
+             /
+            /                   angle
+           +++++
+        -->
+        <attr name="arrow_height" format="dimension" />
+        <attr name="arrow_angle" format="integer" />
+        <attr name="arrow_background" format="reference|color" />
+
+        <attr name="content_color" format="reference|color" />
+
+        <attr name="row_count" format="integer" />
+        <attr name="column_count" format="integer" />
+
+        <attr name="row_separator" format="boolean" />
+        <attr name="column_separator" format="boolean" />
+        <attr name="separator_size" format="dimension" />
+        <attr name="separator_paddingLeftRight" format="dimension" />
+        <attr name="separator_paddingTopBottom" format="dimension" />
+        <attr name="separator_color" format="color" />
+
+    </declare-styleable>
+    <attr name="CustomPanelStyle" format="reference" />
+    <declare-styleable name="DragSwitchView">
+        <attr name="name" format="string" />
+    </declare-styleable>
+    <declare-styleable name="HorDragSwitchView">
+        <attr name="hor_selected_color" format="reference|color" />
+        <attr name="hor_normal_color" format="reference|color" />
+        <attr name="hor_text_size" format="dimension" />
+        <attr name="hor_padding_top" format="dimension" />
+        <attr name="hor_padding_bottom" format="dimension" />
+        <attr name="hor_max_over_scroll" format="dimension" />
+        <attr name="hor_item_space" format="dimension" />
+        <attr name="hor_items" format="reference" />
+        <attr name="hor_clickable" format="boolean" />
+    </declare-styleable>
+
 </resources>

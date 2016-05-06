@@ -14,4 +14,14 @@
     <string name="title_activity_corordinate">CorordinateActivity</string>
     <string name="title_activity_bubble">BubbleActivity</string>
     <string name="title_activity_graduation_seek_bar">GraduationSeekBarActivity</string>
+    <string name="effect">effect</string>
+    <string name="sticker">sticker</string>
+    <string name="ar">ar</string>
+    <string name="other">other</string>
+    <array name="camera_items">
+        <item>@string/ar</item>
+        <item>@string/effect</item>
+        <item>@string/sticker</item>
+        <item>@string/other</item>
+    </array>
 </resources>

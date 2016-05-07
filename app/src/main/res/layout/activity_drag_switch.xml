@@ -4,27 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black"
+    android:background="#ff666666"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".activity.DragSwitchActivity">
 
-    <com.okry.newstuff.view.DragSwitchView
+    <View
+        android:id="@+id/touch_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.okry.newstuff.view.DragSwitchViewWithoutEvent
         android:id="@+id/drag_view"
         android:layout_width="match_parent"
-        android:visibility="gone"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:name="@string/effect"
+        android:visibility="visible" />
 
     <com.okry.newstuff.view.DragSwitchViewHor
         android:id="@+id/drag_view_hor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:hor_selected_color="@android:color/white"
-        app:hor_normal_color="@android:color/darker_gray"
-        app:hor_text_size="15sp"
+        android:visibility="gone"
         app:hor_clickable="true"
-        app:hor_items="@array/camera_items" />
+        app:hor_items="@array/camera_items"
+        app:hor_normal_color="@android:color/darker_gray"
+        app:hor_selected_color="@android:color/white"
+        app:hor_text_size="15sp" />
 
 </RelativeLayout>

@@ -9,13 +9,11 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Build;
-import android.support.v4.view.GestureDetectorCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.SparseArray;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.OverScroller;
@@ -29,13 +27,13 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by hexiaogang on 11/12/15.
+ * 自己不处理事件,都是外面传进来的
  */
-public class DragSwitchView extends View implements GestureDetector.OnGestureListener {
+public class DragSwitchViewWithoutEvent extends View {
     private String mTextStr;
     private Paint mBackgroundPaint;
     private Paint mTextPaint;
-    private int mBackgroundColor = 0x66ff7a73;
+    private int mBackgroundColor = 0x55333333;
     private int mTextColor = 0xffffffff;
     private int mRoundRadius;
     private boolean mDisable = false;
@@ -52,6 +50,7 @@ public class DragSwitchView extends View implements GestureDetector.OnGestureLis
     private int mDigitalSpace;
     private Rect mBackRect;
     private Point mTextPoint;
+    private Point mDividerPoint;
     private Point mDigitalPoint;
     private Rect mDigitalRect;
 
@@ -63,57 +62,50 @@ public class DragSwitchView extends View implements GestureDetector.OnGestureLis
     //保存每个item垂直中心点的值
     private SparseArray<Integer> mCenterYMap = new SparseArray<>();
 
-    private GestureDetectorCompat mGestureDetector;
     private OverScroller mScroller;
 
     private boolean mFling = false;
     private boolean mIsPressed = false;
     private boolean mInScroll = false;
     private int mLastSelectIndex = 0;
-    private boolean mIsInLongPress = false;
-    private boolean mIsFirstScroll = true;
     private int mOverScrollDis = 0;
     private int mTextSize;
     private int mTextSizeBig;
 
     private IItemChangeListener mItemChangeListener = null;
-    private IGestureListener mCustomGestureListener = null;
     private static int REL_SWIPE_MIN_DISTANCE;
     private static int REL_SWIPE_MAX_OFF_PATH;
     private static int REL_SWIPE_THRESHOLD_VELOCITY;
 
 
-    public DragSwitchView(Context context) {
+    public DragSwitchViewWithoutEvent(Context context) {
         super(context);
         init();
     }
 
-    public DragSwitchView(Context context, AttributeSet attrs) {
+    public DragSwitchViewWithoutEvent(Context context, AttributeSet attrs) {
         super(context, attrs);
         initAttrs(attrs, 0);
         init();
     }
 
-    public DragSwitchView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public DragSwitchViewWithoutEvent(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initAttrs(attrs, defStyleAttr);
         init();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public DragSwitchView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public DragSwitchViewWithoutEvent(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initAttrs(attrs, defStyleAttr);
         init();
     }
 
     private void init() {
-        mGestureDetector = new GestureDetectorCompat(getContext(), this);
-        mGestureDetector.setIsLongpressEnabled(true);
-
-        mRoundRadius = Util.dpToPixel(getContext(), 18);
-        mPaddingTop = Util.dpToPixel(getContext(), 8);
-        mPaddingBottom = Util.dpToPixel(getContext(), 10);
+        mRoundRadius = Util.dpToPixel(getContext(), 10);
+        mPaddingTop = Util.dpToPixel(getContext(), 12);
+        mPaddingBottom = Util.dpToPixel(getContext(), 15);
         mPaddingLeft = Util.dpToPixel(getContext(), 20);
         mPaddingRight = Util.dpToPixel(getContext(), 20);
         mSpace = Util.dpToPixel(getContext(), 10);
@@ -127,10 +119,11 @@ public class DragSwitchView extends View implements GestureDetector.OnGestureLis
         mTextPaint = new Paint();
         mTextPaint.setColor(mTextColor);
         mTextPaint.setAntiAlias(true);
+        mTextPaint.setTextAlign(Paint.Align.CENTER);
         mTextSize = Util.dpToPixel(getContext(), 18);
         mTextSizeBig = Util.dpToPixel(getContext(), 20);
         mTextPaint.setTextSize(mTextSize);
-        String[] defaultStrs = {"1", "2", "3", "4", "5", "6"};
+        String[] defaultStrs = {"5", "4", "3", "2", "1", "OFF"};
         mItemList = new ArrayList(Arrays.asList(defaultStrs));
         mScroller = new OverScroller(getContext());
         mScroller.setFriction(0.08f);
@@ -145,10 +138,10 @@ public class DragSwitchView extends View implements GestureDetector.OnGestureLis
     private void initAttrs(AttributeSet attrs, int defStyle) {
         TypedArray ta = getContext().obtainStyledAttributes(
                 attrs,
-                R.styleable.DragSwitchView,
+                R.styleable.DragSwitchViewWithoutEvent,
                 defStyle,
                 0);
-        String name = ta.getString(R.styleable.DragSwitchView_name);
+        String name = ta.getString(R.styleable.DragSwitchViewWithoutEvent_name);
         if (TextUtils.isEmpty(name)) {
             mTextStr = "";
         } else {
@@ -158,10 +151,6 @@ public class DragSwitchView extends View implements GestureDetector.OnGestureLis
 
     public void setItemChangeListener(IItemChangeListener listener) {
         this.mItemChangeListener = listener;
-    }
-
-    public void setGestureListener(IGestureListener listener) {
-        this.mCustomGestureListener = listener;
     }
 
     private String getLongestItem() {
@@ -183,16 +172,24 @@ public class DragSwitchView extends View implements GestureDetector.OnGestureLis
         String textDraw = mTextStr + getLongestItem();
         Rect textRect = new Rect();
         mTextPaint.getTextBounds(textDraw, 0, textDraw.length(), textRect);
+        Rect titleBounds = new Rect();
+        mTextPaint.getTextBounds(mTextStr, 0, mTextStr.length(), titleBounds);
 
         mDigitalRect = new Rect();
         String digitalStr = getLongestItem();
         mTextPaint.getTextBounds(digitalStr, 0, digitalStr.length(), mDigitalRect);
 
+        Rect dividerBounds = new Rect();
+        mTextPaint.getTextBounds("-", 0, 1, dividerBounds);
+
         int totalWidth = mPaddingLeft + mPaddingRight + textRect.width() + mSpace;
         int totalHeight = mPaddingTop + mPaddingBottom + textRect.height();
         mBackRect = new Rect(mInitX - totalWidth / 2, mInitY, mInitX - totalWidth / 2 + totalWidth, mInitY + totalHeight);
-        mTextPoint = new Point(mBackRect.left + mPaddingLeft, mBackRect.bottom - mPaddingBottom);
-        mDigitalPoint = new Point(mBackRect.right - mPaddingRight - mDigitalRect.width(), mTextPoint.y);
+        mTextPoint = new Point(mBackRect.left + mPaddingLeft + titleBounds.width() / 2, mBackRect.bottom - mPaddingBottom);
+        mDigitalPoint = new Point(mBackRect.right - mPaddingRight - mDigitalRect.width() / 2, mTextPoint.y);
+        int dividerX = mTextPoint.x + titleBounds.width() / 2 + ((mDigitalPoint.x - mDigitalRect.width() / 2) - (mTextPoint.x + titleBounds.width() / 2)) / 2;
+        int dividerY = mBackRect.bottom - mBackRect.height() / 2;
+        mDividerPoint = new Point(dividerX, dividerY);
         mMaxDeltaY = 0;
         mMinDeltaY = -(mDigitalSpace + mDigitalRect.height()) * (mItemList.size() - 1);
         mTargetRect = new Rect(mDigitalPoint.x, mDigitalPoint.y - mDigitalRect.height(), mDigitalPoint.x + mDigitalRect.width(), mDigitalPoint.y);
@@ -226,6 +223,7 @@ public class DragSwitchView extends View implements GestureDetector.OnGestureLis
         mCenterYMap.clear();
         canvas.drawRoundRect(new RectF(mBackRect), mRoundRadius, mRoundRadius, mBackgroundPaint);
         canvas.drawText(mTextStr, mTextPoint.x, mTextPoint.y, mTextPaint);
+        //canvas.drawText("-", mDividerPoint.x, mDividerPoint.y, mTextPaint);
         int digitalY = mDigitalPoint.y + mDeltaY;
         int digitalX = mDigitalPoint.x;
         for (int i = 0;
@@ -257,30 +255,6 @@ public class DragSwitchView extends View implements GestureDetector.OnGestureLis
         mTextPaint.setAlpha(255);
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (mDisable) {
-            return false;
-        }
-        boolean ret = mGestureDetector.onTouchEvent(event);
-        if (event.getAction() == MotionEvent.ACTION_UP) {
-            Logger.d("Action_up");
-            mIsPressed = false;
-            mInScroll = false;
-            if (mIsInLongPress) {
-                if (mCustomGestureListener != null) {
-                    mIsInLongPress = false;
-                    mCustomGestureListener.onLongPress(false);
-                }
-            } else {
-                autoSettle();
-                if (mCustomGestureListener != null) {
-                    mCustomGestureListener.onUp();
-                }
-            }
-        }
-        return ret;
-    }
 
     private void autoSettle() {
         if (mFling) {
@@ -365,31 +339,31 @@ public class DragSwitchView extends View implements GestureDetector.OnGestureLis
         return minDelta;
     }
 
-    @Override
     public boolean onDown(MotionEvent e) {
-        if (mCustomGestureListener != null) {
-            mCustomGestureListener.onDown();
-        }
         if (!mScroller.isFinished()) {
             mScroller.forceFinished(true);
         }
         mFling = false;
         mIsPressed = true;
-        mIsFirstScroll = true;
         return true;
     }
 
-    @Override
+    public boolean onUp(MotionEvent event) {
+        Logger.d("Action_up");
+        mIsPressed = false;
+        mInScroll = false;
+        autoSettle();
+        return false;
+    }
+
     public void onShowPress(MotionEvent e) {
 
     }
 
-    @Override
     public boolean onSingleTapUp(MotionEvent e) {
         return false;
     }
 
-    @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
         if (!mInScroll && Math.abs(e2.getY() - e1.getY()) < REL_SWIPE_MIN_DISTANCE) {
             return false;
@@ -398,10 +372,6 @@ public class DragSwitchView extends View implements GestureDetector.OnGestureLis
             return false;
         }
         Logger.d("onScroll,distanceY:" + distanceY);
-        if (mIsFirstScroll && mCustomGestureListener != null) {
-            mIsFirstScroll = false;
-            mCustomGestureListener.onStatusChange();
-        }
         mDeltaY -= distanceY * 0.6;
         if (mDeltaY > mMaxDeltaY + mOverScrollDis) {
             mDeltaY = mMaxDeltaY + mOverScrollDis;
@@ -414,35 +384,16 @@ public class DragSwitchView extends View implements GestureDetector.OnGestureLis
         return true;
     }
 
-    @Override
     public void onLongPress(MotionEvent e) {
-        if (mCustomGestureListener != null) {
-            mIsInLongPress = true;
-            mCustomGestureListener.onLongPress(true);
-        }
     }
 
-    @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         Logger.d("onFling");
         float diffX = e2.getX() - e1.getX();
-        if (!mInScroll && Math.abs(diffX) > REL_SWIPE_MIN_DISTANCE && Math.abs(velocityX) > REL_SWIPE_THRESHOLD_VELOCITY) {
-            if (mCustomGestureListener != null) {
-                if (diffX > 0) {
-                    mCustomGestureListener.flingHorizontal(true);
-                } else {
-                    mCustomGestureListener.flingHorizontal(false);
-                }
-            }
-            Logger.d("fling left:" + ((diffX > 0) ? "true" : "false"));
-            return true;
-        }
+
         mFling = true;
         mScroller.fling(0, mDeltaY, 0, (int) velocityY, 0, 0, mMinDeltaY, mMaxDeltaY, 0, mDigitalRect.height());
         invalidate();
-        if (mCustomGestureListener != null) {
-            mCustomGestureListener.onStatusChange();
-        }
         return true;
     }
 
@@ -450,19 +401,13 @@ public class DragSwitchView extends View implements GestureDetector.OnGestureLis
         this.mDisable = disable;
     }
 
-    public static interface IItemChangeListener {
-        public void onItemChange(int index);
+    public static class ItemInfo {
+        Point point = new Point();
+        int index;
     }
 
-    public static interface IGestureListener {
-        public void onLongPress(boolean isDown);
-
-        public void onStatusChange();
-
-        public void onUp();
-
-        public void onDown();
-
-        public void flingHorizontal(boolean left);
+    public interface IItemChangeListener {
+        void onItemChange(int index);
     }
+
 }

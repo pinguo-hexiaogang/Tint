@@ -112,7 +112,7 @@
 
     </declare-styleable>
     <attr name="CustomPanelStyle" format="reference" />
-    <declare-styleable name="DragSwitchView">
+    <declare-styleable name="DragSwitchViewWithoutEvent">
         <attr name="name" format="string" />
     </declare-styleable>
     <declare-styleable name="HorDragSwitchView">

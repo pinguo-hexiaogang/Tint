@@ -113,7 +113,7 @@
     </declare-styleable>
     <attr name="CustomPanelStyle" format="reference" />
     <declare-styleable name="DragSwitchViewWithoutEvent">
-        <attr name="name" format="string" />
+        <attr name="left_text" format="string" />
     </declare-styleable>
     <declare-styleable name="HorDragSwitchView">
         <attr name="hor_selected_color" format="reference|color" />

@@ -20,8 +20,8 @@
         android:id="@+id/drag_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:name="@string/effect"
-        android:visibility="visible" />
+        app:left_text="@string/effect"
+        android:visibility="gone" />
 
     <com.okry.newstuff.view.DragSwitchViewHor
         android:id="@+id/drag_view_hor"

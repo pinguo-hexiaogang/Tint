@@ -82,10 +82,10 @@ public class DragSwitchActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 boolean ret = false;
+                ret = mGestureDetector.onTouchEvent(event);
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    ret = mDragView.onUp(event);
+                    mDragView.onUp(event);
                 }
-                ret = ret || mGestureDetector.onTouchEvent(event);
                 return ret;
             }
         });

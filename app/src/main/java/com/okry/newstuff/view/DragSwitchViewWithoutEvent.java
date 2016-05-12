@@ -1,5 +1,7 @@
 package com.okry.newstuff.view;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -48,17 +50,17 @@ public class DragSwitchViewWithoutEvent extends View {
     private int mSpace;
     //数字之间的间隔
     private int mDigitalSpace;
-    private Rect mBackRect;
-    private Point mTextPoint;
-    private Point mDividerPoint;
-    private Point mDigitalPoint;
-    private Rect mDigitalRect;
+    private Rect mBackRect = new Rect();
+    private Point mTextPoint = new Point();
+    private Point mDividerPoint = new Point();
+    private Point mDigitalPoint = new Point();
+    private Rect mDigitalRect = new Rect();
 
     private int mDeltaY = 0;
     private int mMaxDeltaY;
     private int mMinDeltaY;
     private List<String> mItemList;
-    private Rect mTargetRect;
+    private Rect mTargetRect = new Rect();
     //保存每个item垂直中心点的值
     private SparseArray<Integer> mCenterYMap = new SparseArray<>();
 
@@ -74,8 +76,11 @@ public class DragSwitchViewWithoutEvent extends View {
 
     private IItemChangeListener mItemChangeListener = null;
     private static int REL_SWIPE_MIN_DISTANCE;
-    private static int REL_SWIPE_MAX_OFF_PATH;
     private static int REL_SWIPE_THRESHOLD_VELOCITY;
+    private static int REL_SWIPE_MAX_OFF_PATH;
+    private boolean mIsHiding = false;
+    //每次currentIndex发生变化都通知
+    private boolean mDispatchEveryChange = false;
 
 
     public DragSwitchViewWithoutEvent(Context context) {
@@ -131,8 +136,8 @@ public class DragSwitchViewWithoutEvent extends View {
 
         DisplayMetrics dm = getResources().getDisplayMetrics();
         REL_SWIPE_MIN_DISTANCE = (int) (50.0f * dm.density + 0.5);
+        REL_SWIPE_THRESHOLD_VELOCITY = (int) (300.0f * dm.density + 0.5);
         REL_SWIPE_MAX_OFF_PATH = (int) (250.0f * dm.density + 0.5);
-        REL_SWIPE_THRESHOLD_VELOCITY = (int) (200.0f * dm.density + 0.5);
     }
 
     private void initAttrs(AttributeSet attrs, int defStyle) {
@@ -141,7 +146,7 @@ public class DragSwitchViewWithoutEvent extends View {
                 R.styleable.DragSwitchViewWithoutEvent,
                 defStyle,
                 0);
-        String name = ta.getString(R.styleable.DragSwitchViewWithoutEvent_name);
+        String name = ta.getString(R.styleable.DragSwitchViewWithoutEvent_left_text);
         if (TextUtils.isEmpty(name)) {
             mTextStr = "";
         } else {
@@ -231,6 +236,7 @@ public class DragSwitchViewWithoutEvent extends View {
              i++) {
             Rect digitalRect = new Rect(digitalX, digitalY - mDigitalRect.height(), digitalX + mDigitalRect.width(), digitalY);
             mCenterYMap.put(i, (digitalRect.top + digitalRect.bottom) / 2);
+
             /*
              *设置字体透明度
              * 1.字体全部在背景内，不透明
@@ -246,7 +252,6 @@ public class DragSwitchViewWithoutEvent extends View {
                 canvas.drawText(mItemList.get(i), digitalX, digitalY, mTextPaint);
             } else {
                 mTextPaint.setAlpha(100);
-                mTextPaint.setAlpha(100);
                 canvas.drawText(mItemList.get(i), digitalX, digitalY, mTextPaint);
             }
             digitalY += mDigitalRect.height() + mDigitalSpace;
@@ -257,10 +262,12 @@ public class DragSwitchViewWithoutEvent extends View {
 
 
     private void autoSettle() {
+        Logger.d("autoSettle:check fling");
         if (mFling) {
             return;
         }
         int scrollY = calculateScrollY();
+        Logger.d("autoSettle:start,scrollY:" + scrollY);
         if (scrollY != 0) {
             mScroller.startScroll(0, mDeltaY, 0, scrollY, 500);
             invalidate();
@@ -272,10 +279,17 @@ public class DragSwitchViewWithoutEvent extends View {
         }
     }
 
+    public void setDispatchEveryChange(boolean enable) {
+        this.mDispatchEveryChange = enable;
+    }
+
     @Override
     public void computeScroll() {
         super.computeScroll();
-        //L.d("computeScroll");
+        //Logger.d("computeScroll");
+        if (mDispatchEveryChange) {
+            callItemChangeListener();
+        }
         if (mScroller.computeScrollOffset()) {
             mDeltaY = mScroller.getCurrY();
             //Logger.d("mDeltaY is:" + mDeltaY);
@@ -328,6 +342,9 @@ public class DragSwitchViewWithoutEvent extends View {
     private int calculateScrollY() {
         int targetCenterY = (mTargetRect.top + mTargetRect.bottom) / 2;
         int minDelta = Integer.MAX_VALUE;
+        if (mCenterYMap.size() == 0) {
+            return 0;
+        }
         for (int i = 0;
              i < mItemList.size();
              i++) {
@@ -345,6 +362,7 @@ public class DragSwitchViewWithoutEvent extends View {
         }
         mFling = false;
         mIsPressed = true;
+        removeCallbacks(mHideRunnable);
         return true;
     }
 
@@ -353,6 +371,7 @@ public class DragSwitchViewWithoutEvent extends View {
         mIsPressed = false;
         mInScroll = false;
         autoSettle();
+        hideDelay();
         return false;
     }
 
@@ -381,6 +400,7 @@ public class DragSwitchViewWithoutEvent extends View {
         }
         invalidate();
         mInScroll = true;
+        showWithAnimation();
         return true;
     }
 
@@ -388,12 +408,18 @@ public class DragSwitchViewWithoutEvent extends View {
     }
 
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        Logger.d("onFling");
+        Logger.d("onFling,velocityX:" + velocityX + ",velocityY:" + velocityY);
+        float diffY = e2.getY() - e1.getY();
         float diffX = e2.getX() - e1.getX();
+        if (!mInScroll && (Math.abs(diffX) > REL_SWIPE_MIN_DISTANCE && Math.abs(velocityX) > REL_SWIPE_THRESHOLD_VELOCITY)) {
+            Logger.d("onFling,return");
+            return false;
+        }
 
         mFling = true;
         mScroller.fling(0, mDeltaY, 0, (int) velocityY, 0, 0, mMinDeltaY, mMaxDeltaY, 0, mDigitalRect.height());
         invalidate();
+        showWithAnimation();
         return true;
     }
 
@@ -401,13 +427,49 @@ public class DragSwitchViewWithoutEvent extends View {
         this.mDisable = disable;
     }
 
-    public static class ItemInfo {
-        Point point = new Point();
-        int index;
-    }
-
     public interface IItemChangeListener {
         void onItemChange(int index);
     }
 
+    public void showWithAnimation() {
+        if (getVisibility() == View.VISIBLE && !mIsHiding) {
+            return;
+        }
+        mIsHiding = false;
+        Logger.d("animation:showWIthAnimation");
+        setVisibility(View.VISIBLE);
+        setAlpha(0);
+        animate().setDuration(10).alpha(1.0f).setListener(null).start();
+    }
+
+    public void hideDelay() {
+        removeCallbacks(mHideRunnable);
+        postDelayed(mHideRunnable, 1500);
+    }
+
+    private void hideWidthAnimation() {
+        Logger.d("animation:hideWidthAnimation");
+        if (getVisibility() != View.VISIBLE) {
+            return;
+        }
+        mIsHiding = true;
+        setVisibility(View.VISIBLE);
+        setAlpha(1.0f);
+        animate().alpha(0).setDuration(1000).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                Logger.d("animation:onAnimationEnd");
+                setVisibility(View.INVISIBLE);
+                mIsHiding = false;
+            }
+        }).start();
+    }
+
+    private Runnable mHideRunnable = new Runnable() {
+        @Override
+        public void run() {
+            hideWidthAnimation();
+        }
+    };
 }

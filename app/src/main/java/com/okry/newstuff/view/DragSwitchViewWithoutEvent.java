@@ -231,33 +231,31 @@ public class DragSwitchViewWithoutEvent extends View {
         //canvas.drawText("-", mDividerPoint.x, mDividerPoint.y, mTextPaint);
         int digitalY = mDigitalPoint.y + mDeltaY;
         int digitalX = mDigitalPoint.x;
-        for (int i = 0;
-             i < mItemList.size();
-             i++) {
+        for (int i = 0; i < mItemList.size(); i++) {
             Rect digitalRect = new Rect(digitalX, digitalY - mDigitalRect.height(), digitalX + mDigitalRect.width(), digitalY);
             mCenterYMap.put(i, (digitalRect.top + digitalRect.bottom) / 2);
-
-            /*
-             *设置字体透明度
-             * 1.字体全部在背景内，不透明
-             * 2.字体部分在背景内，半透明
-             * 3.字体全部在背景外，全透明
-             */
-            if (mBackRect.contains(digitalRect)) {
-                //mTextPaint.setTextSize(mTextSizeBig);
-                mTextPaint.setAlpha(255);
-                canvas.drawText(mItemList.get(i), digitalX, digitalY, mTextPaint);
-            } else if (/*mIsPressed && */(mBackRect.contains(digitalRect.left, digitalRect.top) || mBackRect.contains(digitalRect.left, digitalRect.bottom))) {
-                mTextPaint.setAlpha(100);
-                canvas.drawText(mItemList.get(i), digitalX, digitalY, mTextPaint);
-            } else {
-                mTextPaint.setAlpha(100);
-                canvas.drawText(mItemList.get(i), digitalX, digitalY, mTextPaint);
-            }
             digitalY += mDigitalRect.height() + mDigitalSpace;
+        }
+
+        int currentIndex = calculateCurrentIndex();
+        for (int i = 0; i < mItemList.size(); i++) {
+            int bottom = mCenterYMap.get(i) + mDigitalRect.height() / 2;
+            int alpha = getAlphaByCurrentIndex(currentIndex, i);
+            mTextPaint.setAlpha(alpha);
+            canvas.drawText(mItemList.get(i), digitalX, bottom, mTextPaint);
         }
         //mTextPaint.setTextSize(mTextSize);
         mTextPaint.setAlpha(255);
+    }
+
+    private int getAlphaByCurrentIndex(int currentIndex, int index) {
+        int dis = Math.abs(currentIndex - index);
+        int alpha = 255 - dis * 120;
+        if (alpha < 0) {
+            alpha = 0;
+        }
+        return alpha;
+
     }
 
 

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.okry.newstuff.R;
+import com.orhanobut.logger.Logger;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -18,6 +19,7 @@ public class RippleActivity extends ActionBarActivity {
     @InjectView(R.id.ripple_image_view)
     View mRippleView;
 
+    private int a = 0xffffffff;
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,5 +28,6 @@ public class RippleActivity extends ActionBarActivity {
         ButterKnife.inject(this);
         //RippleDrawable rippleDrawable = new RippleDrawable(ColorStateList.valueOf(getResources().getColor(R.color.light_common_high_light)),mImageView.getDrawable(),null);
         //mImageView.setImageDrawable(rippleDrawable);
+        Logger.d("a:" + a);
     }
 }

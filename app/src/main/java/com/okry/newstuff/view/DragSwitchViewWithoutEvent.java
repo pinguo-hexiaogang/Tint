@@ -250,7 +250,7 @@ public class DragSwitchViewWithoutEvent extends View {
 
     private int getAlphaByCurrentIndex(int currentIndex, int index) {
         int dis = Math.abs(currentIndex - index);
-        int alpha = 255 - dis * 120;
+        int alpha = 255 - dis * 123;
         if (alpha < 0) {
             alpha = 0;
         }
@@ -354,6 +354,15 @@ public class DragSwitchViewWithoutEvent extends View {
         return minDelta;
     }
 
+    /**
+     * 计算某个index的scrollY
+     */
+    private int calculateToIndexScrollY(int index) {
+        int scrollY = index * (mDigitalRect.height() + mDigitalSpace);
+        Logger.d("scroll to index:" + index + ",scrollY is:" + scrollY);
+        return -scrollY;
+    }
+
     public boolean onDown(MotionEvent e) {
         if (!mScroller.isFinished()) {
             mScroller.forceFinished(true);
@@ -415,7 +424,21 @@ public class DragSwitchViewWithoutEvent extends View {
         }
 
         mFling = true;
-        mScroller.fling(0, mDeltaY, 0, (int) velocityY, 0, 0, mMinDeltaY, mMaxDeltaY, 0, mDigitalRect.height());
+        mScroller.fling(0, mDeltaY, 0, (int) (velocityY * 0.1), 0, 0, mMinDeltaY, mMaxDeltaY, 0, mDigitalRect.height());
+       /* int currentIndex = calculateCurrentIndex();
+        int nextIndex = 0;
+        if(velocityY > 0){
+            nextIndex = currentIndex - 1;
+            if(nextIndex < 0){
+                nextIndex = 0;
+            }
+        }else{
+            nextIndex = currentIndex + 1;
+            if( nextIndex >= mItemList.size()){
+                nextIndex = mItemList.size() -1;
+            }
+        }
+        mScroller.startScroll(0,mDeltaY,0,calculateToIndexScrollY(nextIndex) - mDeltaY,500);*/
         invalidate();
         showWithAnimation();
         return true;

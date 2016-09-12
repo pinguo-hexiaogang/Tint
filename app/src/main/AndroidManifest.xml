@@ -239,6 +239,24 @@
                 <category android:name="com.okry.category.NEW_STUFF" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.LamdbaActivity"
+            android:label="LambdaActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="com.okry.category.NEW_STUFF" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.OkHttpActivity"
+            android:label="OkHttpActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="com.okry.category.NEW_STUFF" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

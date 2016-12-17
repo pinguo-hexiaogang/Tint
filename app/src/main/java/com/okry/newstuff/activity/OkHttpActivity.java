@@ -1,5 +1,6 @@
 package com.okry.newstuff.activity;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -20,6 +21,17 @@ public class OkHttpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ok_http);
         request();
+
+    }
+
+    public void uriTest() {
+        String testStr = "test://xiaogang@google.com:899/hexiaogang/kjkkk";
+        Uri uri = Uri.parse(testStr);
+        String schme = uri.getScheme();
+        String host = uri.getHost();
+        String path = uri.getPath();
+        String au = uri.getAuthority();
+        System.out.print("schkkkk");
     }
 
     private void request() {

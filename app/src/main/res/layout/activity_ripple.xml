@@ -21,19 +21,31 @@
         android:id="@+id/ripple_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/image_view"
-        android:clickable="true"
         android:layout_alignBottom="@id/image_view"
-        android:layout_alignRight="@id/image_view"
         android:layout_alignLeft="@id/image_view"
-        android:background="@drawable/settings_item_click_selector" />
+        android:layout_alignRight="@id/image_view"
+        android:layout_alignTop="@id/image_view"
+        android:background="@drawable/settings_item_click_selector"
+        android:clickable="true" />
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/image_view"
         android:text="NEW"
         android:textColor="@android:color/holo_red_light"
-        android:layout_below="@id/image_view"
-        android:textSize="20sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:textSize="20sp" />
+
+    <FrameLayout
+        android:id="@+id/trans_layout"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:background="@android:color/black">
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@android:color/holo_red_dark" />
+    </FrameLayout>
 
 </RelativeLayout>

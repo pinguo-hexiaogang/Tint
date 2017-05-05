@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:Tint="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+            xmlns:Tint="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,63 +13,64 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="直接在xml中使用ImageView tint属性" />
+            android:text="直接在xml中使用ImageView tint属性"/>
 
         <ImageView
             android:id="@+id/tint_image1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/abc_ic_ab_back_mtrl_am_alpha"
-            android:tint="@android:color/holo_blue_bright"></ImageView>
+            android:tint="@android:color/holo_blue_bright">
+        </ImageView>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="使用DrawableCompact的setTint方式修改" />
+            android:text="使用DrawableCompact的setTint方式修改"/>
 
         <Button
             android:id="@+id/tint_image2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/abc_ic_clear_mtrl_alpha"></Button>
+            >
+        </Button>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="注意这里相同的资源会被tint色覆盖" />
+            android:text="注意这里相同的资源会被tint色覆盖"/>
 
         <ImageView
             android:id="@+id/tint_image3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/abc_ic_clear_mtrl_alpha"></ImageView>
+            ></ImageView>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="使用mutate后不会影响原资源" />
+            android:text="使用mutate后不会影响原资源"/>
 
         <ImageView
             android:id="@+id/tint_image4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/abc_ic_search_api_mtrl_alpha"></ImageView>
+            ></ImageView>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="需要将mutate后的新资源重新设入" />
+            android:text="需要将mutate后的新资源重新设入"/>
 
         <ImageView
             android:id="@+id/tint_image5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/abc_ic_search_api_mtrl_alpha"></ImageView>
+            ></ImageView>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="使用TintedBitmapDrawable修改tint的方式" />
+            android:text="使用TintedBitmapDrawable修改tint的方式"/>
 
         <ImageView
             android:id="@+id/tint_image6"
@@ -80,7 +81,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="这个TintedBitmapDrawable也是new出来所以同样不会影响原资源" />
+            android:text="这个TintedBitmapDrawable也是new出来所以同样不会影响原资源"/>
 
         <ImageView
             android:id="@+id/tint_image7"
@@ -91,61 +92,61 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="selector中使用tint" />
+            android:text="selector中使用tint"/>
 
         <ImageButton
             android:id="@+id/tint_imagebutton1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/tint_drawable" />
+            android:src="@drawable/tint_drawable"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="使用AppCompatButton" />
+            android:text="使用AppCompatButton"/>
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/compat_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/abc_ic_menu_share_mtrl_alpha" />
+            android:background="@drawable/abc_ic_menu_share_mtrl_alpha"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="使用自定义的TintButton" />
+            android:text="使用自定义的TintButton"/>
 
         <com.okry.newstuff.tintwidget.TintButton
             android:id="@+id/tint_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/abc_ic_menu_share_mtrl_alpha"
-            Tint:PgBackgroundTint="@color/custom_tint" />
+            Tint:PgBackgroundTint="@color/custom_tint"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="使用自定义的TintImageView,BackGround" />
+            android:text="使用自定义的TintImageView,BackGround"/>
 
         <com.okry.newstuff.tintwidget.TintImageView
             android:id="@+id/tint_imv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/eft_lightcolor_beauty"
-            Tint:PgBackgroundTintMode="src_atop"
-            Tint:PgBackgroundTint="@color/custom_tint" />
+            Tint:PgBackgroundTint="@color/custom_tint"
+            Tint:PgBackgroundTintMode="src_atop"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="使用自定义的TintImageView,Src" />
+            android:text="使用自定义的TintImageView,Src"/>
 
         <com.okry.newstuff.tintwidget.TintImageView
             android:id="@+id/tint_imv_src"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/eft_skin_red"
-            Tint:PgImageTintMode="src_atop"
-            Tint:PgImageTint="@color/custom_tint" />
+            Tint:PgImageTint="@color/custom_tint"
+            Tint:PgImageTintMode="src_atop"/>
     </LinearLayout>
 </ScrollView>

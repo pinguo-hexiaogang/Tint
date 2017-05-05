@@ -57,7 +57,7 @@ public class MainTint extends BaseActivity implements View.OnClickListener{
         setContentView(R.layout.activity_tint);
         ButterKnife.inject(this);
         setClickListener();
-        // 使用DrawableCompact的方式
+      /*  // 使用DrawableCompact的方式
         Drawable d = getResources().getDrawable(R.drawable.abc_ic_clear_mtrl_alpha);
         d = DrawableCompat.wrap(d);
         //DrawableCompat.setTint(d, 0x90ff0000);
@@ -68,7 +68,7 @@ public class MainTint extends BaseActivity implements View.OnClickListener{
         d2 = DrawableCompat.wrap(d2);
         d2 = d2.mutate();
         DrawableCompat.setTint(d2, 0x900000ff);
-        mView5.setImageDrawable(d2);// 重设
+        mView5.setImageDrawable(d2);// 重设*/
         // 使用TintedBitmapDrawable
         TintedBitmapDrawable d3 = new TintedBitmapDrawable(getResources(), R.drawable.abc_ic_menu_share_mtrl_alpha, 0x900ffff0);
         mView6.setImageDrawable(d3);

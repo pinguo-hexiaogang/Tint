@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.okry.newstuff">
+          package="com.okry.newstuff">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.A" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.A"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:name=".NewStuffApplication"
@@ -17,63 +17,63 @@
             android:name=".MainNewStuff"
             android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.MainTint"
             android:label="@string/CATEGORY_1">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="com.okry.category.NEW_STUFF" />
+                <category android:name="com.okry.category.NEW_STUFF"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".view.MatrixActivity"
             android:label="@string/title_activity_matrix">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="com.okry.category.NEW_STUFF" />
+                <category android:name="com.okry.category.NEW_STUFF"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.RotateLineActivity"
             android:label="rotate scale line">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="com.okry.category.NEW_STUFF" />
+                <category android:name="com.okry.category.NEW_STUFF"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.VectorDrawableActivity"
             android:label="vector drawable">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="com.okry.category.NEW_STUFF" />
+                <category android:name="com.okry.category.NEW_STUFF"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".gl.AirHockeyActivity"
             android:label="AirHockey">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="com.okry.category.NEW_STUFF" />
+                <category android:name="com.okry.category.NEW_STUFF"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".gl.AirHockeyColorActivity"
             android:label="AirHockey color">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="com.okry.category.NEW_STUFF" />
+                <category android:name="com.okry.category.NEW_STUFF"/>
             </intent-filter>
         </activity>
         <activity
@@ -81,72 +81,72 @@
             android:label="ripple"
             android:theme="@style/Theme.MyTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="com.okry.category.NEW_STUFF" />
+                <category android:name="com.okry.category.NEW_STUFF"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.ToolBarActivity"
             android:label="tool bar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="com.okry.category.NEW_STUFF" />
+                <category android:name="com.okry.category.NEW_STUFF"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.DragSwitchActivity"
             android:label="drag switch">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="com.okry.category.NEW_STUFF" />
+                <category android:name="com.okry.category.NEW_STUFF"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.PortraitLoadingActivity"
             android:label="portrait loading">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="com.okry.category.NEW_STUFF" />
+                <category android:name="com.okry.category.NEW_STUFF"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".gl.AirHockeyOrthomActivity"
             android:label="AirHockey Orthom">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="com.okry.category.NEW_STUFF" />
+                <category android:name="com.okry.category.NEW_STUFF"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".gl.AirHockey3DActivity"
             android:label="AirHockey 3D">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="com.okry.category.NEW_STUFF" />
+                <category android:name="com.okry.category.NEW_STUFF"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.GestureTestActivity"
             android:label="gesture test">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="com.okry.category.NEW_STUFF" />
+                <category android:name="com.okry.category.NEW_STUFF"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.AnimationTestActivity"
             android:label="animation test">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="com.okry.category.NEW_STUFF" />
+                <category android:name="com.okry.category.NEW_STUFF"/>
             </intent-filter>
         </activity>
         <activity
@@ -154,9 +154,9 @@
             android:label="@string/title_activity_download_drawable"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="com.okry.category.NEW_STUFF" />
+                <category android:name="com.okry.category.NEW_STUFF"/>
             </intent-filter>
         </activity>
         <activity
@@ -164,9 +164,9 @@
             android:label="@string/title_activity_scene_intent_test"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="com.okry.category.NEW_STUFF" />
+                <category android:name="com.okry.category.NEW_STUFF"/>
             </intent-filter>
         </activity>
         <activity
@@ -174,9 +174,9 @@
             android:label="@string/title_activity_app_wall_test"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="com.okry.category.NEW_STUFF" />
+                <category android:name="com.okry.category.NEW_STUFF"/>
             </intent-filter>
         </activity>
         <activity
@@ -184,9 +184,9 @@
             android:label="@string/title_activity_web_view_cache_test"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="com.okry.category.NEW_STUFF" />
+                <category android:name="com.okry.category.NEW_STUFF"/>
             </intent-filter>
         </activity>
         <activity
@@ -194,9 +194,9 @@
             android:label="@string/title_activity_smile_face_animation"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="com.okry.category.NEW_STUFF" />
+                <category android:name="com.okry.category.NEW_STUFF"/>
             </intent-filter>
         </activity>
         <activity
@@ -204,9 +204,9 @@
             android:label="@string/title_activity_corordinate"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="com.okry.category.NEW_STUFF" />
+                <category android:name="com.okry.category.NEW_STUFF"/>
             </intent-filter>
         </activity>
         <activity
@@ -214,9 +214,9 @@
             android:label="@string/title_activity_bubble"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="com.okry.category.NEW_STUFF" />
+                <category android:name="com.okry.category.NEW_STUFF"/>
             </intent-filter>
         </activity>
         <activity
@@ -224,9 +224,9 @@
             android:label="@string/title_activity_graduation_seek_bar"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="com.okry.category.NEW_STUFF" />
+                <category android:name="com.okry.category.NEW_STUFF"/>
             </intent-filter>
         </activity>
         <activity
@@ -234,27 +234,37 @@
             android:label="PanelViewActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="com.okry.category.NEW_STUFF" />
+                <category android:name="com.okry.category.NEW_STUFF"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.LamdbaActivity"
             android:label="LambdaActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="com.okry.category.NEW_STUFF" />
+                <category android:name="com.okry.category.NEW_STUFF"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.OkHttpActivity"
             android:label="OkHttpActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="com.okry.category.NEW_STUFF" />
+                <category android:name="com.okry.category.NEW_STUFF"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.PopupWindowTestActivity"
+            android:label="PopupWindowTest"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="com.okry.category.NEW_STUFF"/>
             </intent-filter>
         </activity>
     </application>

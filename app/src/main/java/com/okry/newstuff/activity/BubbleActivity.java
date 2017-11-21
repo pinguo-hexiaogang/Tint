@@ -1,6 +1,7 @@
 package com.okry.newstuff.activity;
 
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -21,6 +22,8 @@ import junit.framework.Assert;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -59,9 +62,51 @@ public class BubbleActivity extends AppCompatActivity {
         styleTextBuilder.setSpan(new ForegroundColorSpan(0XFFFDD600), 0, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         //mSpanTv.setText(styleTextBuilder);
         testNullify();
+
+
+        List<String> lists = new ArrayList<>();
+        lists.add("1");
+        lists.add("1");
+        lists.add("2");
+        lists.add("1");
+        lists.add("3");
+        lists.add("1");
+        lists.add("5");
+        lists.add("5");
+        lists.add("7");
+        lists.add("5");
+        lists.add("7");
+        lists.add("8");
+        List<String> newList = removeEqual(lists, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                if (o1.equals(o2))
+                    return 0;
+                else
+                    return 1;
+            }
+        });
+        testMatrixMirror();
     }
+
+    private void testMatrixMirror(){
+
+        float[] src = {0.2f,1f};
+        float[] dst = new float[2];
+        Matrix matrix = new Matrix();
+        //matrix.postTranslate(-0.5f,0);
+        matrix.postScale(-1,1,0.5f,0f);
+        //matrix.postTranslate(0.5f,0);
+        matrix.mapPoints(dst,src);
+
+        for(float n:dst){
+            System.out.println(n);
+        }
+
+    }
+
     public void testNullify() {
-        Collection<Integer> c  = new ArrayList<Integer>();
+        Collection<Integer> c = new ArrayList<Integer>();
         nullify(c);
         Assert.assertNotNull(c);
         final Collection<Integer> c1 = c;
@@ -88,5 +133,25 @@ public class BubbleActivity extends AppCompatActivity {
                 break;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    public static <T> List<T> removeEqual(List<T> srcList, Comparator<T> comparator) {
+        if (srcList == null) {
+            return null;
+        }
+        List<T> newList = new ArrayList<T>();
+        for (T t : srcList) {
+            boolean alreadyHas = false;
+            for (T newT : newList) {
+                if (comparator.compare(newT, t) == 0) {
+                    alreadyHas = true;
+                    break;
+                }
+            }
+            if (!alreadyHas) {
+                newList.add(t);
+            }
+        }
+        return newList;
     }
 }

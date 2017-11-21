@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'me.tatarka.retrolambda'
 android {
     compileSdkVersion 25
@@ -22,15 +24,31 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+
+        }
+    }
+    dexOptions {
+        preDexLibraries true
+        incremental true
+        javaMaxHeapSize "6g"
     }
 }
 
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
     compile 'com.android.support:appcompat-v7:25.2.0'
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'com.github.orhanobut:logger:1.12'
     compile 'com.android.support:design:25.2.0'
     compile 'com.squareup.okhttp:okhttp:2.4.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile "org.jetbrains.anko:anko-commons:$anko_version"
 
+}
+repositories {
+    mavenCentral()
 }

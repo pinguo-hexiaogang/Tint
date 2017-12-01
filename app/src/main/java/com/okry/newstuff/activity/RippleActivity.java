@@ -6,9 +6,8 @@ import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
 import android.widget.ImageView;
 
 import com.okry.newstuff.R;
@@ -17,7 +16,7 @@ import com.orhanobut.logger.Logger;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class RippleActivity extends ActionBarActivity {
+public class RippleActivity extends AppCompatActivity{
     @InjectView(R.id.image_view)
     ImageView mImageView;
     @InjectView(R.id.ripple_image_view)

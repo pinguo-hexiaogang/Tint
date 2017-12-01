@@ -1,12 +1,9 @@
 package com.okry.newstuff.activity
 
-import android.animation.ArgbEvaluator
-import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.animation.AlphaAnimation
 import android.view.animation.LinearInterpolator
-import butterknife.ButterKnife
 import com.okry.newstuff.R
 import kotlinx.android.synthetic.main.activity_animation_test.*
 
@@ -49,6 +46,5 @@ class AnimationTestActivity : AppCompatActivity() {
         imageSwitcher.outAnimation = AlphaAnimation(1f,0f)
         imageSwitcher.outAnimation.duration = 5000
         imageSwitcher.outAnimation.interpolator = LinearInterpolator()
-
     }
 }

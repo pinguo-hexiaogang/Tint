@@ -259,11 +259,19 @@
         </activity>
         <activity
             android:name=".activity.PopupWindowTestActivity"
-            android:label="PopupWindowTest"
-            >
+            android:label="PopupWindowTest">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
+                <category android:name="com.okry.category.NEW_STUFF"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.LottieActivity"
+            android:label="@string/title_activity_lottie"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
                 <category android:name="com.okry.category.NEW_STUFF"/>
             </intent-filter>
         </activity>

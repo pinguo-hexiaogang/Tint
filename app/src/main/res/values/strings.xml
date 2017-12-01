@@ -24,4 +24,5 @@
         <item>@string/sticker</item>
         <item>@string/other</item>
     </array>
+    <string name="title_activity_lottie">LottieActivity</string>
 </resources>

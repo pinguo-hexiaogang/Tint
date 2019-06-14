@@ -210,7 +210,7 @@ public class DragSwitchViewHor extends View implements GestureDetector.OnGesture
     @Override
     protected void onDraw(Canvas canvas) {
         int currentIndex = calculateCurrentIndex();
-        canvas.save(Canvas.ALL_SAVE_FLAG);
+        canvas.save();
         canvas.translate(-mScrollX, 0);
         for (ItemInfo itemInfo : mItemInfoList) {
             if (itemInfo.index == currentIndex) {

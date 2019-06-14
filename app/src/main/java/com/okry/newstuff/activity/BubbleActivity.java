@@ -18,8 +18,6 @@ import com.okry.newstuff.R;
 import com.okry.newstuff.view.BubbleView;
 import com.orhanobut.logger.Logger;
 
-import junit.framework.Assert;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -108,11 +106,8 @@ public class BubbleActivity extends AppCompatActivity {
     public void testNullify() {
         Collection<Integer> c = new ArrayList<Integer>();
         nullify(c);
-        Assert.assertNotNull(c);
         final Collection<Integer> c1 = c;
-        Assert.assertTrue(c1.equals(c));
         change(c);
-        Assert.assertTrue(c1.equals(c));
     }
 
     private void change(Collection<Integer> c) {

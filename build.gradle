@@ -4,7 +4,9 @@ buildscript {
     ext.anko_version='0.10.2'
 
     repositories {
-        jcenter()
+        maven{ url'http://maven.aliyun.com/nexus/content/repositories/jcenter'}
+
+
         maven {
             url 'https://maven.google.com/'
             name 'Google'
@@ -19,7 +21,9 @@ buildscript {
 
 allprojects {
     repositories {
-        jcenter()
+        maven{ url'http://maven.aliyun.com/nexus/content/repositories/jcenter'}
+
+
         maven { url "https://jitpack.io" }
     }
 }

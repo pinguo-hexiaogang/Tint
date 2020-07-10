@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>创建快照</title>
+  <style media="screen">
+    * {
+      margin: 0;
+      padding: 0
+    }
+
+    html,
+    body {
+      height: 100%
+    }
+
+    .main {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      height: 100%;
+      width: 100%
+    }
+
+    .model {
+      flex: 1
+    }
+
+    .buttons {
+      font-size: 0;
+    }
+
+    .button {
+      margin: 5px 0 5px 5px;
+      width: 100px;
+      height: 30px;
+      border-radius: 3px;
+      border: none;
+      background: #11DAB7;
+      color: #FFFFFF;
+    }
+
+  </style>
+  <!-- 引用BIMFACE的JavaScript显示组件库 -->
+  <script src="https://static.bimface.com/api/BimfaceSDKLoader/BimfaceSDKLoader@latest-release.js"
+    charset="utf-8"></script>
+</head>
+
+<body>
+  <!-- 定义DOM元素，用于在该DOM元素中显示模型或图纸 -->
+  <div class='main'>
+    <div class='buttons'>
+      <button type="button" class="button" onclick="createSnapshotAsync()">生成截图</button>
+    </div>
+    <!-- 定义DOM元素，用于在该DOM元素中显示模型或图纸 -->
+    <div class='model' id="domId"></div>
+  </div>
+  <script type="text/javascript">
+    var viewer2D;
+    var app;
+    var drawingState;
+    var viewToken = '30f199ff43f34e10912f6836ad0ccb9c';
+    // 初始化显示组件
+    var options = new BimfaceSDKLoaderConfig();
+    options.viewToken = viewToken;
+    console.log("xiaogang===========")
+    console.error("xiaogang===========")
+
+    BimfaceSDKLoader.load(options, successCallback, failureCallback);
+    function successCallback(viewMetaData) {
+      if (viewMetaData.viewType == "drawingView") {
+        // ======== 判断是否为Drawing模型 ========        
+        // 获取DOM元素
+        var dom4Show = document.getElementById('domId');
+        var webAppConfig = new Glodon.Bimface.Application.WebApplicationDrawingConfig();
+        webAppConfig.domElement = dom4Show;
+        webAppConfig.drawingUrl = viewMetaData.drawingUrl;
+        webAppConfig.viewToken = viewMetaData.viewToken;
+        // 创建WebApplication
+        app = new Glodon.Bimface.Application.WebApplicationDrawing(webAppConfig);
+        // 添加待显示的模型
+        app.load(viewToken);
+        // 从WebApplication获取viewerDrawing对象
+        viewer2D = app.getViewer();
+        // 监听添加view完成的事件
+        viewer2D.addEventListener(Glodon.Bimface.Viewer.ViewerDrawingEvent.Loaded, function () {
+          //自适应屏幕大小
+          window.onresize = function () {
+            viewer2D.resize(document.documentElement.clientWidth, document.documentElement.clientHeight - 40)
+          }
+
+        });
+      }
+    }
+    function failureCallback(error) {
+      console.log(error);
+    }
+    //获取当前模型快照
+    function createSnapshotAsync() {
+      //快照背景色
+      var colorRed = new Glodon.Web.Graphics.Color("#888888", 0.8);
+      //创建快照
+      var image = viewer2D.createSnapshotAsync(colorRed, function (data) {
+        var img = new Image();
+        img.src = data;
+        document.body.appendChild(img);
+      });
+    }
+  </script>
+</body>
+
+</html>
